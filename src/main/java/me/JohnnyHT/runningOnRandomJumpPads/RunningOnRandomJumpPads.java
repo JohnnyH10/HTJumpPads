@@ -1,6 +1,6 @@
 package me.JohnnyHT.runningOnRandomJumpPads;
 
-import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -103,25 +103,26 @@ public final class RunningOnRandomJumpPads extends JavaPlugin implements Listene
             }
             case "equipt" -> {
                 if (!noJump) return;
-                String invitory = parts.get(1);
+
                 if (item != null && item.getType() != Material.AIR) {
                     ItemMeta meta = item.getItemMeta();
                     if (meta != null) {
-                        meta.setDisplayName(item.getType().name());
+                        String displayName = item.getType().name().toLowerCase().replace("_", " ");
+                        meta.setDisplayName(displayName.substring(0, 1).toUpperCase() + displayName.substring(1));
                         item.setItemMeta(meta);
                     }
-                }
 
-                if (invitory == "head"){
-                    player.getInventory().setHelmet(item);
-                } else if (invitory == "chest") {
-                    player.getInventory().setChestplate(item);
-                } else if (invitory == "legs") {
-                    player.getInventory().setLeggings(item);
-                } else if (invitory == "boots") {
-                    player.getInventory().setBoots(item);
-                } else if (invitory == "hand") {
-                    player.getInventory().addItem(item);
+                    String slot = parts.get(1).toLowerCase();
+                    player.sendMessage(name + slot);
+
+                    switch (slot) {
+                        case "head" -> player.getInventory().setHelmet(item);
+                        case "chest" -> player.getInventory().setChestplate(item);
+                        case "legs" -> player.getInventory().setLeggings(item);
+                        case "boots" -> player.getInventory().setBoots(item);
+                        case "hand" -> player.getInventory().addItem(item);
+                        default -> player.sendMessage(ChatColor.RED + "Invalid equip slot: " + slot);
+                    }
                 }
             }
             default -> {
