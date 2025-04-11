@@ -1,0 +1,4 @@
+name: RunningOnRandomJumpPads
+version: '1.0-SNAPSHOT'
+main: me.JohnnyHT.runningOnRandomJumpPads.RunningOnRandomJumpPads
+api-version: '1.21'
