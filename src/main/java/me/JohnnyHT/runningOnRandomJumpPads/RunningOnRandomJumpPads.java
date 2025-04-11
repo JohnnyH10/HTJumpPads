@@ -1,13 +1,9 @@
 package me.JohnnyHT.runningOnRandomJumpPads;
 
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Particle;
+import org.bukkit.*;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.ItemFrame;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -123,6 +119,154 @@ public final class RunningOnRandomJumpPads extends JavaPlugin implements Listene
                         case "hand" -> player.getInventory().addItem(item);
                         default -> player.sendMessage(ChatColor.RED + "Invalid equip slot: " + slot);
                     }
+                }
+            }
+            case "horse" -> {
+                if (!noJump) return;
+
+                double speed;
+                try {
+                    speed = Double.parseDouble(parts.get(1));
+                } catch (NumberFormatException e) {
+                    player.sendMessage(ChatColor.RED + "Invalid speed value.");
+                    return;
+                }
+
+                double jump;
+                try {
+                    jump = Double.parseDouble(parts.get(2));
+                } catch (NumberFormatException e) {
+                    player.sendMessage(ChatColor.RED + "Invalid jump value.");
+                    return;
+                }
+
+                if (player.getVehicle() instanceof Horse) {
+                    player.sendMessage(ChatColor.RED + "You are already riding a horse!");
+                    return;
+                }
+
+                Horse horse = (Horse) player.getWorld().spawn(player.getLocation(), Horse.class);
+                horse.setTamed(true);
+                horse.setOwner(player);
+                horse.setAdult();
+                horse.setCustomName(ChatColor.GOLD + player.getName() + "'s Horse");
+                horse.setCustomNameVisible(true);
+                horse.getInventory().setSaddle(new ItemStack(Material.SADDLE));
+                horse.setDomestication(horse.getMaxDomestication());
+
+                horse.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(speed);
+                horse.getAttribute(Attribute.JUMP_STRENGTH).setBaseValue(jump);
+
+                horse.addPassenger(player);
+                player.sendMessage(ChatColor.YELLOW + "Spawned a horse with speed: " + speed);
+            }
+            case "pig" -> {
+                if (!noJump) return;
+
+                double speed;
+                try {
+                    speed = Double.parseDouble(parts.get(1));
+                } catch (NumberFormatException e) {
+                    player.sendMessage(ChatColor.RED + "Invalid speed value.");
+                    return;
+                }
+
+                if (player.getVehicle() instanceof Pig) {
+                    player.sendMessage(ChatColor.RED + "You are already riding a pig!");
+                    return;
+                }
+
+                Pig pig = (Pig) player.getWorld().spawn(player.getLocation(), Pig.class);
+                pig.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(speed);
+                pig.setSaddle(true);
+
+                pig.addPassenger(player);
+
+                player.getInventory().addItem(new ItemStack(Material.CARROT_ON_A_STICK));
+                player.sendMessage(ChatColor.YELLOW + "Spawned a pig and gave you a carrot on a stick!");
+            }
+            case "strider" -> {
+                if (!noJump) return;
+
+                if (player.getVehicle() instanceof Strider) {
+                    player.sendMessage(ChatColor.RED + "You are already riding a strider!");
+                    return;
+                }
+
+                double speed;
+                try {
+                    speed = Double.parseDouble(parts.get(1));
+                } catch (NumberFormatException e) {
+                    player.sendMessage(ChatColor.RED + "Invalid speed value.");
+                    return;
+                }
+
+                Strider strider = (Strider) player.getWorld().spawn(player.getLocation(), Strider.class);
+                strider.setSaddle(true);
+                strider.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(speed);
+                strider.addPassenger(player);
+
+
+
+                player.getInventory().addItem(new ItemStack(Material.WARPED_FUNGUS_ON_A_STICK));
+                player.sendMessage(ChatColor.YELLOW + "Spawned a strider and gave you a warped fungus on a stick!");
+            }
+            case "camel" -> {
+                if (!noJump) return;
+
+                double speed;
+                try {
+                    speed = Double.parseDouble(parts.get(1));
+                } catch (NumberFormatException e) {
+                    player.sendMessage(ChatColor.RED + "Invalid speed value.");
+                    return;
+                }
+
+                double jump;
+                try {
+                    jump = Double.parseDouble(parts.get(2));
+                } catch (NumberFormatException e) {
+                    player.sendMessage(ChatColor.RED + "Invalid jump value.");
+                    return;
+                }
+
+                if (player.getVehicle() instanceof Camel) {
+                    player.sendMessage(ChatColor.RED + "You are already riding a camel!");
+                    return;
+                }
+
+                Camel camel = (Camel) player.getWorld().spawn(player.getLocation(), Camel.class);
+                camel.setTamed(true);
+                camel.setAdult();
+                camel.setCustomName(ChatColor.GOLD + player.getName() + "'s Camel");
+                camel.setCustomNameVisible(true);
+                camel.getInventory().setSaddle(new ItemStack(Material.SADDLE));
+                camel.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(speed);
+                camel.getAttribute(Attribute.JUMP_STRENGTH).setBaseValue(jump);
+                camel.addPassenger(player);
+
+                player.sendMessage(ChatColor.YELLOW + "Spawned a camel!");
+            }
+            case "iceboat" -> {
+                if (!noJump) return;
+
+                if (player.getVehicle() instanceof Boat) {
+                    player.sendMessage(ChatColor.RED + "You are already in a boat!");
+                    return;
+                }
+
+                Location loc = player.getLocation().clone();
+                loc.setY(loc.getY() + 1);
+
+                Entity entity = player.getWorld().spawnEntity(loc, EntityType.ACACIA_BOAT);
+                if (entity instanceof Boat boat) {
+                    boat.setInvulnerable(true);
+                    boat.setCustomName(ChatColor.AQUA + player.getName() + "'s Ice Boat");
+                    boat.setCustomNameVisible(true);
+                    boat.addPassenger(player);
+                    player.sendMessage(ChatColor.AQUA + "Spawned an ice boat!");
+                } else {
+                    player.sendMessage(ChatColor.RED + "Failed to spawn boat.");
                 }
             }
             default -> {
