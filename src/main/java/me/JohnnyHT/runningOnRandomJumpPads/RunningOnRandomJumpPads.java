@@ -12,7 +12,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.util.Vector;
 
 import java.util.Arrays;
 import java.util.List;
@@ -21,7 +20,8 @@ public final class RunningOnRandomJumpPads extends JavaPlugin implements Listene
 
     @Override
     public void onEnable() {
-        // Plugin startup logic
+        getLogger().info("JumpPad Plugin Enabled!");
+        getServer().getPluginManager().registerEvents(this, this);
 
     }
 
@@ -55,27 +55,23 @@ public final class RunningOnRandomJumpPads extends JavaPlugin implements Listene
                 Double x = Double.parseDouble(parts.get(1));
                 Double y = Double.parseDouble(parts.get(2));
                 Location location = player.getEyeLocation();
-
-                player.setVelocity(new Vector(x, y, 0));
+                player.setVelocity(location.getDirection().setY(0).normalize().multiply(x).setY(y));
                 player.sendMessage("§aHigh Jump!");
             }
-            case "float" -> {
-                player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 100, 1));
-                player.setVelocity(new Vector(0, 0.8, 0));
-                player.sendMessage("§eFloating...");
+            case "speed" -> {
+                Integer time = Integer.parseInt(parts.get(1));
+                Integer amplifier = Integer.parseInt(parts.get(2));
+                player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, time, amplifier));
+                player.sendMessage("§eSpeed...");
+            }
+            case "trident" -> {
+
             }
             default -> {
-                // Optional: Handle unknown name
+
             }
         }
-
-
-
     }
-
-
-
-
 }
 
 
