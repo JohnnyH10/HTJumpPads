@@ -49,7 +49,25 @@ public final class RunningOnRandomJumpPads extends JavaPlugin implements Listene
                             if(item != null) {
                                 ItemMeta meta = item.getItemMeta();
                                 String name = meta.getDisplayName();
-                                frameItemNameChecker(name, player);
+                                frameItemNameChecker(name, player, false);
+                            }
+                            return;
+                        }
+                    }
+                }
+            }
+        } else {
+            Block originBlock = event.getFrom().getBlock();
+            for (int dx = -1; dx <= 1; dx++) {
+                for (int dz = -1; dz <= 1; dz++) {
+                    Block checkBlock = originBlock.getRelative(dx, 0, dz);
+                    for (Entity entity : checkBlock.getWorld().getNearbyEntities(checkBlock.getLocation(), 1.0, 1.0, 1.0)) {
+                        if (entity instanceof ItemFrame itemFrame) {
+                            ItemStack item = itemFrame.getItem();
+                            if(item != null) {
+                                ItemMeta meta = item.getItemMeta();
+                                String name = meta.getDisplayName();
+                                frameItemNameChecker(name, player, true);
                             }
                             return;
                         }
@@ -59,12 +77,13 @@ public final class RunningOnRandomJumpPads extends JavaPlugin implements Listene
         }
     }
 
-    public static void frameItemNameChecker(String nameOfItemFrame, Player player) {
+    public static void frameItemNameChecker(String nameOfItemFrame, Player player, Boolean noJump) {
         List<String> parts = Arrays.asList(nameOfItemFrame.split("[ ]+"));
         String name = parts.get(0);
         playerCoolDownPad(player.getUniqueId(), plugin);
         switch (name) {
             case "jump" -> {
+                if (noJump) return;
                 Double x = Double.parseDouble(parts.get(1));
                 Double y = Double.parseDouble(parts.get(2));
                 Location location = player.getEyeLocation();
@@ -72,12 +91,14 @@ public final class RunningOnRandomJumpPads extends JavaPlugin implements Listene
                 player.sendMessage("§aHigh Jump! + " + parts.get(1) +" "+ parts.get(2));
             }
             case "speed" -> {
+                if (!noJump) return;
                 Integer time = Integer.parseInt(parts.get(1));
                 Integer amplifier = Integer.parseInt(parts.get(2));
                 player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, time, amplifier));
                 player.sendMessage("§eSpeed...");
             }
-            case "trident" -> {
+            case "equipt+" -> {
+                if (!noJump) return;
 
             }
             default -> {
@@ -93,6 +114,6 @@ public final class RunningOnRandomJumpPads extends JavaPlugin implements Listene
             public void run() {
                 playersNoMoreJump.remove(uuid);
             }
-        }.runTaskTimer(plugin, 0L, 3L);
+        }.runTaskTimer(plugin, 0L, 5L);
     }
 }
