@@ -2,6 +2,8 @@ package me.JohnnyHT.runningOnRandomJumpPads;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.ItemFrame;
@@ -49,7 +51,7 @@ public final class RunningOnRandomJumpPads extends JavaPlugin implements Listene
                             if(item != null) {
                                 ItemMeta meta = item.getItemMeta();
                                 String name = meta.getDisplayName();
-                                frameItemNameChecker(name, player, false);
+                                frameItemNameChecker(name, player, false, item);
                             }
                             return;
                         }
@@ -66,8 +68,9 @@ public final class RunningOnRandomJumpPads extends JavaPlugin implements Listene
                             ItemStack item = itemFrame.getItem();
                             if(item != null) {
                                 ItemMeta meta = item.getItemMeta();
+                                ItemStack copy = item.clone();
                                 String name = meta.getDisplayName();
-                                frameItemNameChecker(name, player, true);
+                                frameItemNameChecker(name, player, true, copy);
                             }
                             return;
                         }
@@ -77,10 +80,10 @@ public final class RunningOnRandomJumpPads extends JavaPlugin implements Listene
         }
     }
 
-    public static void frameItemNameChecker(String nameOfItemFrame, Player player, Boolean noJump) {
+    public static void frameItemNameChecker(String nameOfItemFrame, Player player, Boolean noJump, ItemStack item) {
         List<String> parts = Arrays.asList(nameOfItemFrame.split("[ ]+"));
         String name = parts.get(0);
-        playerCoolDownPad(player.getUniqueId(), plugin);
+        playerCoolDownPad(player.getUniqueId(), 5, plugin);
         switch (name) {
             case "jump" -> {
                 if (noJump) return;
@@ -89,6 +92,7 @@ public final class RunningOnRandomJumpPads extends JavaPlugin implements Listene
                 Location location = player.getEyeLocation();
                 player.setVelocity(location.getDirection().setY(0).normalize().multiply(x).setY(y));
                 player.sendMessage("§aHigh Jump! + " + parts.get(1) +" "+ parts.get(2));
+                player.getWorld().spawnParticle(Particle.EXPLOSION, player.getLocation(), 30, 0.5, 0.5, 0.5, 0.05);
             }
             case "speed" -> {
                 if (!noJump) return;
@@ -97,9 +101,28 @@ public final class RunningOnRandomJumpPads extends JavaPlugin implements Listene
                 player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, time, amplifier));
                 player.sendMessage("§eSpeed...");
             }
-            case "equipt+" -> {
+            case "equipt" -> {
                 if (!noJump) return;
+                String invitory = parts.get(1);
+                if (item != null && item.getType() != Material.AIR) {
+                    ItemMeta meta = item.getItemMeta();
+                    if (meta != null) {
+                        meta.setDisplayName(item.getType().name());
+                        item.setItemMeta(meta);
+                    }
+                }
 
+                if (invitory == "head"){
+                    player.getInventory().setHelmet(item);
+                } else if (invitory == "chest") {
+                    player.getInventory().setChestplate(item);
+                } else if (invitory == "legs") {
+                    player.getInventory().setLeggings(item);
+                } else if (invitory == "boots") {
+                    player.getInventory().setBoots(item);
+                } else if (invitory == "hand") {
+                    player.getInventory().addItem(item);
+                }
             }
             default -> {
 
@@ -107,13 +130,13 @@ public final class RunningOnRandomJumpPads extends JavaPlugin implements Listene
         }
     }
 
-    public static void playerCoolDownPad(UUID uuid, RunningOnRandomJumpPads plugin){
+    public static void playerCoolDownPad(UUID uuid,int timeTicks, RunningOnRandomJumpPads plugin){
         playersNoMoreJump.add(uuid);
         new BukkitRunnable() {
             @Override
             public void run() {
                 playersNoMoreJump.remove(uuid);
             }
-        }.runTaskTimer(plugin, 0L, 5L);
+        }.runTaskLater(plugin, timeTicks);
     }
 }
