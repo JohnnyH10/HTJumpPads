@@ -145,7 +145,7 @@ public final class RunningOnRandomJumpPads extends JavaPlugin implements Listene
                     return;
                 }
 
-                Horse horse = (Horse) player.getWorld().spawn(player.getLocation(), Horse.class);
+                Horse horse = player.getWorld().spawn(player.getLocation(), Horse.class);
                 horse.setTamed(true);
                 horse.setOwner(player);
                 horse.setAdult();
@@ -201,7 +201,7 @@ public final class RunningOnRandomJumpPads extends JavaPlugin implements Listene
                     return;
                 }
 
-                Strider strider = (Strider) player.getWorld().spawn(player.getLocation(), Strider.class);
+                Strider strider = player.getWorld().spawn(player.getLocation(), Strider.class);
                 strider.setSaddle(true);
                 strider.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(speed);
                 strider.addPassenger(player);
@@ -235,7 +235,7 @@ public final class RunningOnRandomJumpPads extends JavaPlugin implements Listene
                     return;
                 }
 
-                Camel camel = (Camel) player.getWorld().spawn(player.getLocation(), Camel.class);
+                Camel camel = player.getWorld().spawn(player.getLocation(), Camel.class);
                 camel.setTamed(true);
                 camel.setAdult();
                 camel.setCustomName(ChatColor.GOLD + player.getName() + "'s Camel");
