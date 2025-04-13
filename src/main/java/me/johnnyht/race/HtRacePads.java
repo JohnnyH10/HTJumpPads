@@ -1,6 +1,6 @@
 package me.johnnyht.race;
 
-import me.johnnyht.race.bstats.Metrics;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Block;
@@ -80,24 +80,43 @@ public final class HtRacePads extends JavaPlugin implements Listener {
     public static void frameItemNameChecker(String nameOfItemFrame, Location itemFrameLocation, Player player, boolean isJump, ItemStack item) {
         List<String> parts = Arrays.asList(nameOfItemFrame.split("\\s+"));
         String name = parts.get(0);
-        playerCoolDownPad(player.getUniqueId(), 5, plugin);
+
         switch (name) {
             case "jump" -> {
+
+                if (!isJump) {
+                    int y;
+                    try {
+                        y = Integer.parseInt(parts.get(1));
+                    } catch (NumberFormatException e) {
+                        plugin.getLogger().severe("Failed to parse Y value for jump pad named " + nameOfItemFrame + " at location " + itemFrameLocation + ". Input: " + parts.get(1));
+                        return;
+                    }
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 10, y));
+                    return;
+                }
+
+                player.getWorld().spawnParticle(Particle.EXPLOSION, player.getLocation(), 30, 0.5, 0.5, 0.5, 0.05);
+                player.removePotionEffect(PotionEffectType.JUMP_BOOST);
+                playerCoolDownPad(player.getUniqueId(), 5, plugin);
+            }
+            case "launch" -> {
                 if (!isJump) return;
+                playerCoolDownPad(player.getUniqueId(), 5, plugin);
 
                 double x, y;
 
                 try {
                     x = Double.parseDouble(parts.get(1));
                 } catch (NumberFormatException e) {
-                    plugin.getLogger().severe("Failed to parse X value for jump pad named " + nameOfItemFrame + " at location " + itemFrameLocation + ". Input: " + parts.get(1));
+                    plugin.getLogger().severe("Failed to parse X value for launch pad named " + nameOfItemFrame + " at location " + itemFrameLocation + ". Input: " + parts.get(1));
                     return;
                 }
 
                 try {
                     y = Double.parseDouble(parts.get(2));
                 } catch (NumberFormatException e) {
-                    plugin.getLogger().severe("Failed to parse Y value for jump pad named " + nameOfItemFrame + " at location " + itemFrameLocation + ". Input: " + parts.get(2));
+                    plugin.getLogger().severe("Failed to parse Y value for launch pad named " + nameOfItemFrame + " at location " + itemFrameLocation + ". Input: " + parts.get(2));
                     return;
                 }
 
@@ -108,7 +127,7 @@ public final class HtRacePads extends JavaPlugin implements Listener {
             }
             case "speed" -> {
                 if (isJump) return;
-
+                playerCoolDownPad(player.getUniqueId(), 5, plugin);
                 int time, amplifier;
 
                 try {
@@ -130,6 +149,7 @@ public final class HtRacePads extends JavaPlugin implements Listener {
             }
             case "equip" -> {
                 if (isJump) return;
+                playerCoolDownPad(player.getUniqueId(), 5, plugin);
 
                 if (item != null && item.getType() != Material.AIR) {
                     ItemMeta meta = item.getItemMeta();
@@ -154,6 +174,7 @@ public final class HtRacePads extends JavaPlugin implements Listener {
             }
             case "horse" -> {
                 if (isJump) return;
+                playerCoolDownPad(player.getUniqueId(), 5, plugin);
 
                 double speed, jump;
 
@@ -193,6 +214,7 @@ public final class HtRacePads extends JavaPlugin implements Listener {
             }
             case "pig" -> {
                 if (isJump) return;
+                playerCoolDownPad(player.getUniqueId(), 5, plugin);
 
                 double speed;
 
@@ -218,6 +240,7 @@ public final class HtRacePads extends JavaPlugin implements Listener {
             }
             case "strider" -> {
                 if (isJump) return;
+                playerCoolDownPad(player.getUniqueId(), 5, plugin);
 
                 if (player.getVehicle() instanceof Strider) {
                     player.sendMessage(ChatColor.RED + "You are already riding a strider!");
@@ -243,6 +266,7 @@ public final class HtRacePads extends JavaPlugin implements Listener {
             }
             case "camel" -> {
                 if (isJump) return;
+                playerCoolDownPad(player.getUniqueId(), 5, plugin);
 
                 double speed, jump;
 
@@ -279,6 +303,7 @@ public final class HtRacePads extends JavaPlugin implements Listener {
             }
             case "iceboat" -> {
                 if (isJump) return;
+                playerCoolDownPad(player.getUniqueId(), 5, plugin);
 
                 if (player.getVehicle() instanceof Boat) {
                     player.sendMessage(ChatColor.RED + "You are already in a boat!");
