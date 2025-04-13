@@ -1,4 +1,4 @@
-package me.JohnnyHT.htRacePads;
+package me.johnnyht.htracepads;
 
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
@@ -19,10 +19,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-public final class htRacePads extends JavaPlugin implements Listener {
+public final class HtRacePads extends JavaPlugin implements Listener {
 
     public static List<UUID> playersNoMoreJump = new ArrayList<>();
-    public static htRacePads plugin;
+    public static HtRacePads plugin;
 
     @Override
     public void onEnable() {
@@ -44,10 +44,10 @@ public final class htRacePads extends JavaPlugin implements Listener {
                     for (Entity entity : checkBlock.getWorld().getNearbyEntities(checkBlock.getLocation(), 1.0, 1.0, 1.0)) {
                         if (entity instanceof ItemFrame itemFrame) {
                             ItemStack item = itemFrame.getItem();
-                            if(item != null) {
+                            if(item.getType() != Material.AIR) {
                                 ItemMeta meta = item.getItemMeta();
                                 String name = meta.getDisplayName();
-                                frameItemNameChecker(name, player, false, item);
+                                frameItemNameChecker(name, itemFrame.getLocation(), player, true, item);
                             }
                             return;
                         }
@@ -62,11 +62,11 @@ public final class htRacePads extends JavaPlugin implements Listener {
                     for (Entity entity : checkBlock.getWorld().getNearbyEntities(checkBlock.getLocation(), 1.0, 1.0, 1.0)) {
                         if (entity instanceof ItemFrame itemFrame) {
                             ItemStack item = itemFrame.getItem();
-                            if(item != null) {
+                            if (item.getType() != Material.AIR) {
                                 ItemMeta meta = item.getItemMeta();
                                 ItemStack copy = item.clone();
                                 String name = meta.getDisplayName();
-                                frameItemNameChecker(name, player, true, copy);
+                                frameItemNameChecker(name, itemFrame.getLocation(), player, false, copy);
                             }
                             return;
                         }
@@ -76,29 +76,59 @@ public final class htRacePads extends JavaPlugin implements Listener {
         }
     }
 
-    public static void frameItemNameChecker(String nameOfItemFrame, Player player, Boolean noJump, ItemStack item) {
-        List<String> parts = Arrays.asList(nameOfItemFrame.split("\s+"));
+    public static void frameItemNameChecker(String nameOfItemFrame, Location itemFrameLocation, Player player, boolean isJump, ItemStack item) {
+        List<String> parts = Arrays.asList(nameOfItemFrame.split("\\s+"));
         String name = parts.get(0);
         playerCoolDownPad(player.getUniqueId(), 5, plugin);
         switch (name) {
             case "jump" -> {
-                if (noJump) return;
-                Double x = Double.parseDouble(parts.get(1));
-                Double y = Double.parseDouble(parts.get(2));
+                if (!isJump) return;
+
+                double x, y;
+
+                try {
+                    x = Double.parseDouble(parts.get(1));
+                } catch (NumberFormatException e) {
+                    plugin.getLogger().severe("Failed to parse X value for jump pad named " + nameOfItemFrame + " at location " + itemFrameLocation + ". Input: " + parts.get(1));
+                    return;
+                }
+
+                try {
+                    y = Double.parseDouble(parts.get(2));
+                } catch (NumberFormatException e) {
+                    plugin.getLogger().severe("Failed to parse Y value for jump pad named " + nameOfItemFrame + " at location " + itemFrameLocation + ". Input: " + parts.get(2));
+                    return;
+                }
+
                 Location location = player.getEyeLocation();
                 player.setVelocity(location.getDirection().setY(0).normalize().multiply(x).setY(y));
-                player.sendMessage("§aHigh Jump! + " + parts.get(1) +" "+ parts.get(2));
+                player.sendMessage("§aHigh Jump! + " + x + " " + y);
                 player.getWorld().spawnParticle(Particle.EXPLOSION, player.getLocation(), 30, 0.5, 0.5, 0.5, 0.05);
             }
             case "speed" -> {
-                if (!noJump) return;
-                Integer time = Integer.parseInt(parts.get(1));
-                Integer amplifier = Integer.parseInt(parts.get(2));
+                if (isJump) return;
+
+                int time, amplifier;
+
+                try {
+                    time = Integer.parseInt(parts.get(1));
+                } catch (NumberFormatException e) {
+                    plugin.getLogger().severe("Failed to parse speed time value for jump pad named " + nameOfItemFrame + " at location " + itemFrameLocation + ". Input: " + parts.get(1));
+                    return;
+                }
+
+                try {
+                    amplifier = Integer.parseInt(parts.get(2));
+                } catch (NumberFormatException e) {
+                    plugin.getLogger().severe("Failed to parse speed amplifier value for jump pad named " + nameOfItemFrame + " at location " + itemFrameLocation + ". Input: " + parts.get(2));
+                    return;
+                }
+
                 player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, time, amplifier));
                 player.sendMessage("§eSpeed...");
             }
-            case "equipt" -> {
-                if (!noJump) return;
+            case "equip" -> {
+                if (isJump) return;
 
                 if (item != null && item.getType() != Material.AIR) {
                     ItemMeta meta = item.getItemMeta();
@@ -122,21 +152,21 @@ public final class htRacePads extends JavaPlugin implements Listener {
                 }
             }
             case "horse" -> {
-                if (!noJump) return;
+                if (isJump) return;
 
-                double speed;
+                double speed, jump;
+
                 try {
                     speed = Double.parseDouble(parts.get(1));
                 } catch (NumberFormatException e) {
-                    player.sendMessage(ChatColor.RED + "Invalid speed value.");
+                    plugin.getLogger().severe("Failed to parse horse speed value for jump pad named " + nameOfItemFrame + " at location " + itemFrameLocation + ". Input: " + parts.get(1));
                     return;
                 }
 
-                double jump;
                 try {
                     jump = Double.parseDouble(parts.get(2));
                 } catch (NumberFormatException e) {
-                    player.sendMessage(ChatColor.RED + "Invalid jump value.");
+                    plugin.getLogger().severe("Failed to parse horse jump value for jump pad named " + nameOfItemFrame + " at location " + itemFrameLocation + ". Input: " + parts.get(2));
                     return;
                 }
 
@@ -161,13 +191,14 @@ public final class htRacePads extends JavaPlugin implements Listener {
                 player.sendMessage(ChatColor.YELLOW + "Spawned a horse with speed: " + speed);
             }
             case "pig" -> {
-                if (!noJump) return;
+                if (isJump) return;
 
                 double speed;
+
                 try {
                     speed = Double.parseDouble(parts.get(1));
                 } catch (NumberFormatException e) {
-                    player.sendMessage(ChatColor.RED + "Invalid speed value.");
+                    plugin.getLogger().severe("Failed to parse pig speed value for jump pad named " + nameOfItemFrame + " at location " + itemFrameLocation + ". Input: " + parts.get(1));
                     return;
                 }
 
@@ -176,17 +207,16 @@ public final class htRacePads extends JavaPlugin implements Listener {
                     return;
                 }
 
-                Pig pig = (Pig) player.getWorld().spawn(player.getLocation(), Pig.class);
+                Pig pig = player.getWorld().spawn(player.getLocation(), Pig.class);
                 pig.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(speed);
                 pig.setSaddle(true);
-
                 pig.addPassenger(player);
 
                 player.getInventory().addItem(new ItemStack(Material.CARROT_ON_A_STICK));
                 player.sendMessage(ChatColor.YELLOW + "Spawned a pig and gave you a carrot on a stick!");
             }
             case "strider" -> {
-                if (!noJump) return;
+                if (isJump) return;
 
                 if (player.getVehicle() instanceof Strider) {
                     player.sendMessage(ChatColor.RED + "You are already riding a strider!");
@@ -194,39 +224,38 @@ public final class htRacePads extends JavaPlugin implements Listener {
                 }
 
                 double speed;
+
                 try {
                     speed = Double.parseDouble(parts.get(1));
                 } catch (NumberFormatException e) {
-                    player.sendMessage(ChatColor.RED + "Invalid speed value.");
+                    plugin.getLogger().severe("Failed to parse strider speed value for jump pad named " + nameOfItemFrame + " at location " + itemFrameLocation + ". Input: " + parts.get(1));
                     return;
                 }
 
                 Strider strider = player.getWorld().spawn(player.getLocation(), Strider.class);
-                strider.setSaddle(true);
                 strider.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(speed);
+                strider.setSaddle(true);
                 strider.addPassenger(player);
-
-
 
                 player.getInventory().addItem(new ItemStack(Material.WARPED_FUNGUS_ON_A_STICK));
                 player.sendMessage(ChatColor.YELLOW + "Spawned a strider and gave you a warped fungus on a stick!");
             }
             case "camel" -> {
-                if (!noJump) return;
+                if (isJump) return;
 
-                double speed;
+                double speed, jump;
+
                 try {
                     speed = Double.parseDouble(parts.get(1));
                 } catch (NumberFormatException e) {
-                    player.sendMessage(ChatColor.RED + "Invalid speed value.");
+                    plugin.getLogger().severe("Failed to parse camel speed value for jump pad named " + nameOfItemFrame + " at location " + itemFrameLocation + ". Input: " + parts.get(1));
                     return;
                 }
 
-                double jump;
                 try {
                     jump = Double.parseDouble(parts.get(2));
                 } catch (NumberFormatException e) {
-                    player.sendMessage(ChatColor.RED + "Invalid jump value.");
+                    plugin.getLogger().severe("Failed to parse camel jump value for jump pad named " + nameOfItemFrame + " at location " + itemFrameLocation + ". Input: " + parts.get(2));
                     return;
                 }
 
@@ -248,7 +277,7 @@ public final class htRacePads extends JavaPlugin implements Listener {
                 player.sendMessage(ChatColor.YELLOW + "Spawned a camel!");
             }
             case "iceboat" -> {
-                if (!noJump) return;
+                if (isJump) return;
 
                 if (player.getVehicle() instanceof Boat) {
                     player.sendMessage(ChatColor.RED + "You are already in a boat!");
@@ -275,7 +304,7 @@ public final class htRacePads extends JavaPlugin implements Listener {
         }
     }
 
-    public static void playerCoolDownPad(UUID uuid,int timeTicks, htRacePads plugin){
+    public static void playerCoolDownPad(UUID uuid, int timeTicks, HtRacePads plugin) {
         playersNoMoreJump.add(uuid);
         new BukkitRunnable() {
             @Override

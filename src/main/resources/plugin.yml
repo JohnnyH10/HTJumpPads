@@ -1,4 +1,4 @@
 name: HTRacePads
 version: '1.0-SNAPSHOT'
-main: me.JohnnyHT.htRacePads.htRacePads
+main: me.johnnyht.htracepads.HtRacePads
 api-version: '1.21'
