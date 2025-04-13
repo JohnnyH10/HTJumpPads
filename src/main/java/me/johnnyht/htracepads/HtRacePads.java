@@ -29,7 +29,7 @@ public final class HtRacePads extends JavaPlugin implements Listener {
 
         plugin = this;
 
-        int pluginId = 25452; // <-- Replace with the id of your plugin!
+        int pluginId = 25452;
         Metrics metrics = new Metrics(this, pluginId);
     }
 
