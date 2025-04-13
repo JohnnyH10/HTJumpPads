@@ -1,4 +1,4 @@
-name: RunningOnRandomJumpPads
+name: HTRacePads
 version: '1.0-SNAPSHOT'
-main: me.JohnnyHT.runningOnRandomJumpPads.RunningOnRandomJumpPads
+main: me.JohnnyHT.htRacePads.htRacePads
 api-version: '1.21'

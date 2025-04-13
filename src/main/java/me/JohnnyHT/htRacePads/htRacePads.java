@@ -1,4 +1,4 @@
-package me.JohnnyHT.runningOnRandomJumpPads;
+package me.JohnnyHT.htRacePads;
 
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
@@ -19,10 +19,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-public final class RunningOnRandomJumpPads extends JavaPlugin implements Listener {
+public final class htRacePads extends JavaPlugin implements Listener {
 
     public static List<UUID> playersNoMoreJump = new ArrayList<>();
-    public static RunningOnRandomJumpPads plugin;
+    public static htRacePads plugin;
 
     @Override
     public void onEnable() {
@@ -77,7 +77,7 @@ public final class RunningOnRandomJumpPads extends JavaPlugin implements Listene
     }
 
     public static void frameItemNameChecker(String nameOfItemFrame, Player player, Boolean noJump, ItemStack item) {
-        List<String> parts = Arrays.asList(nameOfItemFrame.split("[ ]+"));
+        List<String> parts = Arrays.asList(nameOfItemFrame.split("\s+"));
         String name = parts.get(0);
         playerCoolDownPad(player.getUniqueId(), 5, plugin);
         switch (name) {
@@ -275,7 +275,7 @@ public final class RunningOnRandomJumpPads extends JavaPlugin implements Listene
         }
     }
 
-    public static void playerCoolDownPad(UUID uuid,int timeTicks, RunningOnRandomJumpPads plugin){
+    public static void playerCoolDownPad(UUID uuid,int timeTicks, htRacePads plugin){
         playersNoMoreJump.add(uuid);
         new BukkitRunnable() {
             @Override
