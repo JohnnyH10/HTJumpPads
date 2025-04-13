@@ -16,13 +16,10 @@ repositories {
         name = "sonatype"
         url = "https://oss.sonatype.org/content/groups/public/"
     }
-    maven("https://maven.noxcrew.com/public")
 }
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21.4-R0.1-SNAPSHOT")
-    api("com.noxcrew.noxesium:api:NOXESIUM_VERSION")
-
 }
 
 tasks {
