@@ -1,6 +1,6 @@
-package me.johnnyht.htracepads;
+package me.johnnyht.race;
 
-import me.johnnyht.htracepads.bstats.Metrics;
+import me.johnnyht.race.bstats.Metrics;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Block;
