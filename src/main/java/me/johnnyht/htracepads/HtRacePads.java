@@ -1,6 +1,6 @@
-package me.JohnnyHT.htRacePads;
+package me.johnnyht.htracepads;
 
-import me.JohnnyHT.htRacePads.bstats.Metrics;
+import me.johnnyht.htracepads.bstats.Metrics;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Block;
@@ -16,7 +16,6 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
-import java.util.concurrent.Callable;
 
 public final class HtRacePads extends JavaPlugin implements Listener {
 
@@ -30,14 +29,8 @@ public final class HtRacePads extends JavaPlugin implements Listener {
 
         plugin = this;
 
-        // All you have to do is adding the following two lines in your onEnable method.
-        // You can find the plugin ids of your plugins on the page https://bstats.org/what-is-my-plugin-id
         int pluginId = 25452; // <-- Replace with the id of your plugin!
         Metrics metrics = new Metrics(this, pluginId);
-
-        // Optional: Add custom charts
-        metrics.addCustomChart(new Metrics.SimplePie("chart_id", () -> "My value"));
-
     }
 
     @EventHandler
