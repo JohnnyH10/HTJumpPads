@@ -32,26 +32,24 @@ public class EntityRuleManager(private val manager: NoxesiumManager) : Listener 
             for ((entity, holder) in entities) {
                 if (!holder.needsUpdate) continue
 
-                // Send the packet to all players that can see it
                 for (player in Bukkit.getOnlinePlayers()) {
                     if (!player.canSee(entity)) continue
                     manager.sendPacket(player,
                         ClientboundSetExtraEntityDataPacket(
                             entity.entityId,
                             holder.rules
-                                // Only include rules that need to be updated!
-                                .filter { it.value.changePending }
-                                // Only include rules that are available to this player!
                                 .filter { manager.entityRules.isAvailable(it.key, manager.getProtocolVersion(player) ?: -1) }
                                 .ifEmpty { null }
                                 ?.mapValues { (_, rule) ->
-                                    { buffer -> (rule as RemoteServerRule<Any>).write(rule.value, buffer) }
+                                    { buffer ->
+                                        @Suppress("UNCHECKED_CAST")
+                                        (rule as RemoteServerRule<Any>).write(rule.value as Any, buffer)
+                                    }
                                 } ?: continue
                         )
                     )
                 }
 
-                // Mark as updated after we have used the changePending values!
                 holder.markAllUpdated()
             }
         }, 1, 1)
@@ -90,11 +88,13 @@ public class EntityRuleManager(private val manager: NoxesiumManager) : Listener 
                 ClientboundSetExtraEntityDataPacket(
                     entity.entityId,
                     holder.rules
-                        // Only include rules that are available to this player!
                         .filter { manager.entityRules.isAvailable(it.key, protocol) }
                         .ifEmpty { null }
                         ?.mapValues { (_, rule) ->
-                            { buffer -> (rule as RemoteServerRule<Any>).write(rule.value, buffer) }
+                            { buffer ->
+                                @Suppress("UNCHECKED_CAST")
+                                (rule as RemoteServerRule<Any>).write(rule.value as Any, buffer)
+                            }
                         } ?: continue
                 )
             )
@@ -112,19 +112,18 @@ public class EntityRuleManager(private val manager: NoxesiumManager) : Listener 
         val holder = entities[e.entity] ?: return
         val protocol = manager.getProtocolVersion(e.player) ?: return
 
-        // Add a 1 tick delay, since the player doesn't actually register
-        // the entity when beginning tracking, so on localhost the client
-        // fails to add the extra entity data.
         Bukkit.getScheduler().scheduleSyncDelayedTask(manager.plugin, {
             manager.sendPacket(e.player,
                 ClientboundSetExtraEntityDataPacket(
                     e.entity.entityId,
                     holder.rules
-                        // Only include rules that are available to this player!
                         .filter { manager.entityRules.isAvailable(it.key, protocol) }
                         .ifEmpty { null }
                         ?.mapValues { (_, rule) ->
-                            { buffer -> (rule as RemoteServerRule<Any>).write(rule.value, buffer) }
+                            { buffer ->
+                                @Suppress("UNCHECKED_CAST")
+                                (rule as RemoteServerRule<Any>).write(rule.value as Any, buffer)
+                            }
                         } ?: return@scheduleSyncDelayedTask
                 )
             )
