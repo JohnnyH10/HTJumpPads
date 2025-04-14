@@ -96,7 +96,9 @@ public final class HtRacePads extends JavaPlugin implements Listener {
                     return;
                 }
 
-                player.getWorld().spawnParticle(Particle.CLOUD, player.getLocation(), 30, 0.5, 0.5, 0.5, 0.05);
+                if(player.hasPotionEffect(PotionEffectType.JUMP_BOOST)) {
+                    player.getWorld().spawnParticle(Particle.CLOUD, player.getLocation(), 30, 0.5, 0.5, 0.5, 0.05);
+                }
                 player.removePotionEffect(PotionEffectType.JUMP_BOOST);
                 playerCoolDownPad(player.getUniqueId(), 5, plugin);
             }
