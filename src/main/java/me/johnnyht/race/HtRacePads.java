@@ -96,7 +96,7 @@ public final class HtRacePads extends JavaPlugin implements Listener {
                     return;
                 }
 
-                player.getWorld().spawnParticle(Particle.EXPLOSION, player.getLocation(), 30, 0.5, 0.5, 0.5, 0.05);
+                player.getWorld().spawnParticle(Particle.CLOUD, player.getLocation(), 30, 0.5, 0.5, 0.5, 0.05);
                 player.removePotionEffect(PotionEffectType.JUMP_BOOST);
                 playerCoolDownPad(player.getUniqueId(), 5, plugin);
             }
@@ -123,7 +123,7 @@ public final class HtRacePads extends JavaPlugin implements Listener {
                 Location location = player.getEyeLocation();
                 player.setVelocity(location.getDirection().setY(0).normalize().multiply(x).setY(y));
                 player.sendMessage("§aHigh Jump! + " + x + " " + y);
-                player.getWorld().spawnParticle(Particle.EXPLOSION, player.getLocation(), 30, 0.5, 0.5, 0.5, 0.05);
+                player.getWorld().spawnParticle(Particle.CLOUD, player.getLocation(), 30, 0.5, 0.5, 0.5, 0.05);
             }
             case "speed" -> {
                 if (isJump) return;
