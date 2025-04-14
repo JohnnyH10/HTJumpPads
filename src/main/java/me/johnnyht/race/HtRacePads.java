@@ -89,7 +89,7 @@ public final class HtRacePads extends JavaPlugin implements Listener {
                     try {
                         y = Integer.parseInt(parts.get(1));
                     } catch (NumberFormatException e) {
-                        plugin.getLogger().severe("Failed to parse Y value for jump pad named " + nameOfItemFrame + " at location " + itemFrameLocation + ". Input: " + parts.get(1));
+                        plugin.getLogger().severe("Failed to parse int Y value for jump pad named " + nameOfItemFrame + " at location " + itemFrameLocation + ". Input: " + parts.get(1));
                         return;
                     }
                     player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 10, y));
@@ -109,14 +109,14 @@ public final class HtRacePads extends JavaPlugin implements Listener {
                 try {
                     x = Double.parseDouble(parts.get(1));
                 } catch (NumberFormatException e) {
-                    plugin.getLogger().severe("Failed to parse X value for launch pad named " + nameOfItemFrame + " at location " + itemFrameLocation + ". Input: " + parts.get(1));
+                    plugin.getLogger().severe("Failed to parse double X value for launch pad named " + nameOfItemFrame + " at location " + itemFrameLocation + ". Input: " + parts.get(1));
                     return;
                 }
 
                 try {
                     y = Double.parseDouble(parts.get(2));
                 } catch (NumberFormatException e) {
-                    plugin.getLogger().severe("Failed to parse Y value for launch pad named " + nameOfItemFrame + " at location " + itemFrameLocation + ". Input: " + parts.get(2));
+                    plugin.getLogger().severe("Failed to parse double Y value for launch pad named " + nameOfItemFrame + " at location " + itemFrameLocation + ". Input: " + parts.get(2));
                     return;
                 }
 
@@ -133,14 +133,14 @@ public final class HtRacePads extends JavaPlugin implements Listener {
                 try {
                     time = Integer.parseInt(parts.get(1));
                 } catch (NumberFormatException e) {
-                    plugin.getLogger().severe("Failed to parse speed time value for jump pad named " + nameOfItemFrame + " at location " + itemFrameLocation + ". Input: " + parts.get(1));
+                    plugin.getLogger().severe("Failed to parse int speed time value for jump pad named " + nameOfItemFrame + " at location " + itemFrameLocation + ". Input: " + parts.get(1));
                     return;
                 }
 
                 try {
                     amplifier = Integer.parseInt(parts.get(2));
                 } catch (NumberFormatException e) {
-                    plugin.getLogger().severe("Failed to parse speed amplifier value for jump pad named " + nameOfItemFrame + " at location " + itemFrameLocation + ". Input: " + parts.get(2));
+                    plugin.getLogger().severe("Failed to parse int speed amplifier value for jump pad named " + nameOfItemFrame + " at location " + itemFrameLocation + ". Input: " + parts.get(2));
                     return;
                 }
 
@@ -181,14 +181,14 @@ public final class HtRacePads extends JavaPlugin implements Listener {
                 try {
                     speed = Double.parseDouble(parts.get(1));
                 } catch (NumberFormatException e) {
-                    plugin.getLogger().severe("Failed to parse horse speed value for jump pad named " + nameOfItemFrame + " at location " + itemFrameLocation + ". Input: " + parts.get(1));
+                    plugin.getLogger().severe("Failed to parse double horse speed value for jump pad named " + nameOfItemFrame + " at location " + itemFrameLocation + ". Input: " + parts.get(1));
                     return;
                 }
 
                 try {
                     jump = Double.parseDouble(parts.get(2));
                 } catch (NumberFormatException e) {
-                    plugin.getLogger().severe("Failed to parse horse jump value for jump pad named " + nameOfItemFrame + " at location " + itemFrameLocation + ". Input: " + parts.get(2));
+                    plugin.getLogger().severe("Failed to parse double horse jump value for jump pad named " + nameOfItemFrame + " at location " + itemFrameLocation + ". Input: " + parts.get(2));
                     return;
                 }
 
@@ -221,7 +221,7 @@ public final class HtRacePads extends JavaPlugin implements Listener {
                 try {
                     speed = Double.parseDouble(parts.get(1));
                 } catch (NumberFormatException e) {
-                    plugin.getLogger().severe("Failed to parse pig speed value for jump pad named " + nameOfItemFrame + " at location " + itemFrameLocation + ". Input: " + parts.get(1));
+                    plugin.getLogger().severe("Failed to parse double pig speed value for jump pad named " + nameOfItemFrame + " at location " + itemFrameLocation + ". Input: " + parts.get(1));
                     return;
                 }
 
@@ -252,7 +252,7 @@ public final class HtRacePads extends JavaPlugin implements Listener {
                 try {
                     speed = Double.parseDouble(parts.get(1));
                 } catch (NumberFormatException e) {
-                    plugin.getLogger().severe("Failed to parse strider speed value for jump pad named " + nameOfItemFrame + " at location " + itemFrameLocation + ". Input: " + parts.get(1));
+                    plugin.getLogger().severe("Failed to parse strider double speed value for jump pad named " + nameOfItemFrame + " at location " + itemFrameLocation + ". Input: " + parts.get(1));
                     return;
                 }
 
@@ -273,14 +273,14 @@ public final class HtRacePads extends JavaPlugin implements Listener {
                 try {
                     speed = Double.parseDouble(parts.get(1));
                 } catch (NumberFormatException e) {
-                    plugin.getLogger().severe("Failed to parse camel speed value for jump pad named " + nameOfItemFrame + " at location " + itemFrameLocation + ". Input: " + parts.get(1));
+                    plugin.getLogger().severe("Failed to parse double camel speed value for jump pad named " + nameOfItemFrame + " at location " + itemFrameLocation + ". Input: " + parts.get(1));
                     return;
                 }
 
                 try {
                     jump = Double.parseDouble(parts.get(2));
                 } catch (NumberFormatException e) {
-                    plugin.getLogger().severe("Failed to parse camel jump value for jump pad named " + nameOfItemFrame + " at location " + itemFrameLocation + ". Input: " + parts.get(2));
+                    plugin.getLogger().severe("Failed to parse double camel jump value for jump pad named " + nameOfItemFrame + " at location " + itemFrameLocation + ". Input: " + parts.get(2));
                     return;
                 }
 
