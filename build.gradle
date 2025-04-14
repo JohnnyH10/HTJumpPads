@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id("xyz.jpenilla.run-paper") version "2.3.1"
+    id 'org.jetbrains.kotlin.jvm'
 }
 
 group = 'me.JohnnyHT'
@@ -27,6 +28,7 @@ dependencies {
     implementation 'org.bstats:bstats-bukkit:3.0.2'
 
     implementation("com.noxcrew.noxesium:paper:2.7.3")
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 }
 
 tasks {
@@ -41,8 +43,6 @@ tasks {
 def targetJavaVersion = 21
 java {
     def javaVersion = JavaVersion.toVersion(targetJavaVersion)
-    sourceCompatibility = javaVersion
-    targetCompatibility = javaVersion
     if (JavaVersion.current() < javaVersion) {
         toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
     }
@@ -63,4 +63,7 @@ processResources {
     filesMatching('plugin.yml') {
         expand props
     }
+}
+kotlin {
+    jvmToolchain(21)
 }
