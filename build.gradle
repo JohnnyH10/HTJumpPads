@@ -16,11 +16,17 @@ repositories {
         name = "sonatype"
         url = "https://oss.sonatype.org/content/groups/public/"
     }
+    maven {
+        name = "noxcrewMaven"
+        url = uri("https://maven.noxcrew.com/public/")
+    }
 }
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21.4-R0.1-SNAPSHOT")
     implementation 'org.bstats:bstats-bukkit:3.0.2'
+
+    implementation("com.noxcrew.noxesium:paper:2.7.3")
 }
 
 tasks {
