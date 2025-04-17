@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id("xyz.jpenilla.run-paper") version "2.3.1"
     id 'org.jetbrains.kotlin.jvm'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
 group = 'me.JohnnyHT'
@@ -21,6 +22,16 @@ repositories {
         name = "noxcrewMaven"
         url = uri("https://maven.noxcrew.com/public/")
     }
+
+    flatDir {
+        dirs 'libs'
+    }
+}
+
+shadowJar {
+    archiveBaseName.set('HTRacePads')
+    archiveVersion.set("1.0-SNAPSHOT")
+    archiveClassifier.set('fat')
 }
 
 dependencies {
@@ -28,6 +39,7 @@ dependencies {
     implementation 'org.bstats:bstats-bukkit:3.0.2'
 
     implementation("com.noxcrew.noxesium:paper:2.7.3")
+    implementation("com.noxcrew.noxesium:api:2.7.3")
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 }
 
