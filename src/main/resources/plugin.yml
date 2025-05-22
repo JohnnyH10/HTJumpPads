@@ -2,3 +2,7 @@ name: HTRacePads
 version: '1.0'
 main: me.johnnyht.race.HtRacePads
 api-version: '1.21'
+commands:
+  givepads:
+    description: Gives the player a shulker box with one of each pad item
+    usage: /givepads

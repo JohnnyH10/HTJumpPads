@@ -1,5 +1,6 @@
 package me.johnnyht.race;
 
+import me.johnnyht.race.Commands.PadGiveCommand;
 import me.johnnyht.race.bstats.Metrics;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
@@ -26,6 +27,7 @@ public final class HtRacePads extends JavaPlugin implements Listener {
     public void onEnable() {
         getLogger().info("JumpPad Plugin Enabled!");
         getServer().getPluginManager().registerEvents(this, this);
+        getCommand("givepads").setExecutor(new PadGiveCommand());
 
         plugin = this;
 
@@ -326,6 +328,74 @@ public final class HtRacePads extends JavaPlugin implements Listener {
                     player.sendMessage(ChatColor.RED + "Failed to spawn boat.");
                 }
             }
+            case "killvehicle" -> {
+                if (isJump) return;
+                playerCoolDownPad(player.getUniqueId(), 5, plugin);
+
+                Entity vehicle = player.getVehicle();
+                if (vehicle != null) {
+                    vehicle.remove();
+                    player.sendMessage(ChatColor.RED + "Your vehicle has been removed!");
+                } else {
+                    player.sendMessage(ChatColor.YELLOW + "You're not in a vehicle.");
+                }
+            }
+            case "givepotioneffect" -> {
+                if (isJump) return;
+                playerCoolDownPad(player.getUniqueId(), 5, plugin);
+
+                if (parts.size() < 3) {
+                    player.sendMessage(ChatColor.RED + "Usage: givepotioneffect <effect> <durationTicks|infinite> [amplifier]");
+                    return;
+                }
+
+                String effectName = parts.get(1).toUpperCase();
+                String durationInput = parts.get(2);
+                int duration;
+
+                if (durationInput.equalsIgnoreCase("infinite")) {
+                    duration = Integer.MAX_VALUE;
+                } else {
+                    try {
+                        duration = Integer.parseInt(durationInput);
+                    } catch (NumberFormatException e) {
+                        player.sendMessage(ChatColor.RED + "Invalid duration: " + durationInput);
+                        return;
+                    }
+                }
+
+                int amplifier = 1; // Default amplifier
+                if (parts.size() >= 4) {
+                    try {
+                        amplifier = Integer.parseInt(parts.get(3));
+                    } catch (NumberFormatException e) {
+                        player.sendMessage(ChatColor.RED + "Invalid amplifier: " + parts.get(3));
+                        return;
+                    }
+                }
+
+                PotionEffectType effectType = PotionEffectType.getByName(effectName);
+                if (effectType == null) {
+                    player.sendMessage(ChatColor.RED + "Invalid potion effect: " + effectName);
+                    return;
+                }
+
+                player.addPotionEffect(new PotionEffect(effectType, duration, amplifier));
+                player.sendMessage(ChatColor.GREEN + "Applied potion effect: " + effectType.getName() +
+                        (duration == Integer.MAX_VALUE ? " infinitely" : " for " + duration + " ticks") +
+                        " with amplifier " + amplifier + ".");
+            }
+            case "removepotions" -> {
+                if (isJump) return;
+                playerCoolDownPad(player.getUniqueId(), 5, plugin);
+
+                for (PotionEffect effect : player.getActivePotionEffects()) {
+                    player.removePotionEffect(effect.getType());
+                }
+
+                player.sendMessage(ChatColor.AQUA + "All potion effects removed.");
+            }
+
             default -> {
 
             }

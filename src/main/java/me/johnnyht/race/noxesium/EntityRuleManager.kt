@@ -17,6 +17,7 @@ import org.bukkit.event.entity.EntityRemoveEvent
 import java.util.WeakHashMap
 
 public class EntityRuleManager(private val manager: NoxesiumManager) : Listener {
+    /*
 
     private val entities = WeakHashMap<Entity, RuleHolder>()
     private var task: Int = -1
@@ -139,4 +140,6 @@ public class EntityRuleManager(private val manager: NoxesiumManager) : Listener 
     public fun onEntityRemoved(e: EntityRemoveEvent) {
         entities.remove(e.entity)
     }
+
+     */
 }
