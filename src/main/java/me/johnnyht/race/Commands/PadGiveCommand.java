@@ -52,7 +52,7 @@ public class PadGiveCommand implements CommandExecutor {
         inv.addItem(createPad("strider 0.25", Material.WARPED_FUNGUS_ON_A_STICK));
         inv.addItem(createPad("camel 0.2 0.5", Material.HAY_BLOCK));
         inv.addItem(createPad("iceboat", Material.CHERRY_BOAT));
-        inv.addItem(createPad("givepotioneffect jump infinite 2", Material.POTION));
+        inv.addItem(createPad("givepotioneffect jump_boost infinite 2", Material.POTION));
         inv.addItem(createPad("potionremove", Material.MILK_BUCKET));
         inv.addItem(createPad("killvehicle", Material.BARRIER));
 

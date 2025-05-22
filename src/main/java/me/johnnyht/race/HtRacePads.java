@@ -385,17 +385,21 @@ public final class HtRacePads extends JavaPlugin implements Listener {
                         (duration == Integer.MAX_VALUE ? " infinitely" : " for " + duration + " ticks") +
                         " with amplifier " + amplifier + ".");
             }
-            case "removepotions" -> {
+            case "removepotioneffect" -> {
                 if (isJump) return;
-                playerCoolDownPad(player.getUniqueId(), 5, plugin);
+                playerCoolDownPad(player.getUniqueId(), 2, plugin);
+
+                if (player.getActivePotionEffects().isEmpty()) {
+                    player.sendMessage(ChatColor.YELLOW + "You don't have any active potion effects.");
+                    return;
+                }
 
                 for (PotionEffect effect : player.getActivePotionEffects()) {
                     player.removePotionEffect(effect.getType());
                 }
 
-                player.sendMessage(ChatColor.AQUA + "All potion effects removed.");
+                player.sendMessage(ChatColor.GREEN + "All active potion effects removed.");
             }
-
             default -> {
 
             }
