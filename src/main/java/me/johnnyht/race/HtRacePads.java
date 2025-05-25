@@ -39,10 +39,10 @@ public final class HtRacePads extends JavaPlugin implements Listener {
     public void onPlayerJump(PlayerMoveEvent event) {
         Player player = event.getPlayer();
         if (playersNoMoreJump.contains(player.getUniqueId())) return;
-        if (!player.isOnGround() && event.getFrom().getY() < event.getTo().getY()) {
+        if (event.getFrom().getY() < event.getTo().getY() && player.getLocation().subtract(0, 0.1, 0).getBlock().getType().isSolid()) {
             Block originBlock = event.getFrom().getBlock();
-            for (int dx = -1; dx <= 1; dx++) {
-                for (int dz = -1; dz <= 1; dz++) {
+            for (int dx = 0; dx <= 1; dx++) {
+                for (int dz = 0; dz <= 1; dz++) {
                     Block checkBlock = originBlock.getRelative(dx, 0, dz);
                     for (Entity entity : checkBlock.getWorld().getNearbyEntities(checkBlock.getLocation(), 1.0, 1.0, 1.0)) {
                         if (entity instanceof ItemFrame itemFrame) {
@@ -59,8 +59,8 @@ public final class HtRacePads extends JavaPlugin implements Listener {
             }
         } else {
             Block originBlock = event.getFrom().getBlock();
-            for (int dx = -1; dx <= 1; dx++) {
-                for (int dz = -1; dz <= 1; dz++) {
+            for (int dx = 0; dx <= 1; dx++) {
+                for (int dz = 0; dz <= 1; dz++) {
                     Block checkBlock = originBlock.getRelative(dx, 0, dz);
                     for (Entity entity : checkBlock.getWorld().getNearbyEntities(checkBlock.getLocation(), 1.0, 1.0, 1.0)) {
                         if (entity instanceof ItemFrame itemFrame) {
@@ -399,6 +399,13 @@ public final class HtRacePads extends JavaPlugin implements Listener {
                 }
 
                 player.sendMessage(ChatColor.GREEN + "All active potion effects removed.");
+            }
+            case "clearinv" -> {
+                if (isJump) return; // Only trigger on walk-over, not on jump
+                playerCoolDownPad(player.getUniqueId(), 5, plugin);
+
+                player.getInventory().clear();
+                player.sendMessage(ChatColor.RED + "Your inventory has been cleared!");
             }
             default -> {
 

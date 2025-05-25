@@ -55,6 +55,7 @@ public class PadGiveCommand implements CommandExecutor {
         inv.addItem(createPad("givepotioneffect jump_boost infinite 2", Material.POTION));
         inv.addItem(createPad("potionremove", Material.MILK_BUCKET));
         inv.addItem(createPad("killvehicle", Material.BARRIER));
+        inv.addItem(createPad("clearinv", Material.STRUCTURE_VOID));
 
         box.update();
         meta.setBlockState(box);
