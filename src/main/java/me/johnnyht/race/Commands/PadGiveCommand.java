@@ -56,6 +56,7 @@ public class PadGiveCommand implements CommandExecutor {
         inv.addItem(createPad("potionremove", Material.MILK_BUCKET));
         inv.addItem(createPad("killvehicle", Material.BARRIER));
         inv.addItem(createPad("clearinv", Material.STRUCTURE_VOID));
+        inv.addItem(createPad("swimlaunch 2.0 0.0", Material.TROPICAL_FISH));
 
         box.update();
         meta.setBlockState(box);

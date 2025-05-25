@@ -407,6 +407,31 @@ public final class HtRacePads extends JavaPlugin implements Listener {
                 player.getInventory().clear();
                 player.sendMessage(ChatColor.RED + "Your inventory has been cleared!");
             }
+            case "swimlaunch" -> {
+                if (isJump) return;
+                playerCoolDownPad(player.getUniqueId(), 5, plugin);
+
+                double x, y;
+
+                try {
+                    x = Double.parseDouble(parts.get(1));
+                } catch (NumberFormatException e) {
+                    plugin.getLogger().severe("Failed to parse double X value for launch pad named " + nameOfItemFrame + " at location " + itemFrameLocation + ". Input: " + parts.get(1));
+                    return;
+                }
+
+                try {
+                    y = Double.parseDouble(parts.get(2));
+                } catch (NumberFormatException e) {
+                    plugin.getLogger().severe("Failed to parse double Y value for launch pad named " + nameOfItemFrame + " at location " + itemFrameLocation + ". Input: " + parts.get(2));
+                    return;
+                }
+
+                Location location = player.getEyeLocation();
+                player.setVelocity(location.getDirection().setY(0).normalize().multiply(x).setY(y));
+                player.sendMessage("§aHigh Jump! + " + x + " " + y);
+                player.getWorld().spawnParticle(Particle.CLOUD, player.getLocation(), 30, 0.5, 0.5, 0.5, 0.05);
+            }
             default -> {
 
             }
