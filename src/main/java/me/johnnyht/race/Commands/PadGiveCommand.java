@@ -38,6 +38,7 @@ public class PadGiveCommand implements CommandExecutor {
             return true;
         }
 
+        // This is just to make sure the player is oped
         if (!sender.isOp()){
             sender.sendMessage("You need to be oped.");
             return true;
