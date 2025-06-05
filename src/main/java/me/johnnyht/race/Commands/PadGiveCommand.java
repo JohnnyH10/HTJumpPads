@@ -38,6 +38,11 @@ public class PadGiveCommand implements CommandExecutor {
             return true;
         }
 
+        if (!sender.isOp()){
+            sender.sendMessage("You need to be oped.");
+            return true;
+        }
+
         ItemStack shulkerBox = new ItemStack(Material.ORANGE_SHULKER_BOX);
         BlockStateMeta meta = (BlockStateMeta) shulkerBox.getItemMeta();
         ShulkerBox box = (ShulkerBox) meta.getBlockState();
