@@ -93,8 +93,8 @@ public final class HtRacePads extends JavaPlugin implements Listener {
 
         PadAction action = padActions.get(padType);
         if (action != null) {
-            // Pass the arguments (parts from index 1 onwards)
-            String[] args = parts.subList(1, parts.size()).toArray(new String[0]);
+
+            String[] args = parts.subList(0, parts.size()).toArray(new String[0]);
             action.execute(args, itemFrameLocation, player, isJump, item);
         } else {
             // Handle unknown pad types if necessary

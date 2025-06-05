@@ -17,7 +17,7 @@ public class JumpPad implements PadAction {
             try {
                 y = Integer.parseInt(args[1]);
             } catch (Exception e) {
-                HtRacePads.plugin.getLogger().severe("Invalid jump pad value at " + loc);
+                HtRacePads.plugin.getLogger().severe("Invalid jump pad value at " + loc + "|| y is apparently =" + Integer.parseInt(args[1]));
                 return;
             }
             player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 10, y));
