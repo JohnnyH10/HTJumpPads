@@ -8,7 +8,6 @@ import me.johnnyht.race.Pads.PadTypes.Run.Player.*;
 import me.johnnyht.race.Pads.PadTypes.Run.Vehicles.*;
 import me.johnnyht.race.bstats.Metrics;
 import org.bukkit.*;
-import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Block;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -17,8 +16,6 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
@@ -31,12 +28,13 @@ public final class HtRacePads extends JavaPlugin implements Listener {
 
     @Override
     public void onEnable() {
+        plugin = this;
         getLogger().info("JumpPad Plugin Enabled!");
         getServer().getPluginManager().registerEvents(this, this);
         getCommand("givepads").setExecutor(new PadGiveCommand());
         registerPads();
 
-        plugin = this;
+
 
         int pluginId = 25452;
         Metrics metrics = new Metrics(this, pluginId);
