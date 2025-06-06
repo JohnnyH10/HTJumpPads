@@ -12,17 +12,17 @@ import org.bukkit.potion.PotionEffectType;
 public class JumpPad implements PadAction {
     @Override
     public void execute(String[] args, Location loc, Player player, boolean isJump, ItemStack item) {
-        if (!isJump) {
-            int y;
-            try {
-                y = Integer.parseInt(args[1]);
-            } catch (Exception e) {
-                HtRacePads.plugin.getLogger().severe("Invalid jump pad value at " + loc + "|| y is apparently =" + Integer.parseInt(args[1]));
-                return;
-            }
-            player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 10, y));
+        if (!isJump) return; // Launch pad only triggers on jump
+
+        int y;
+        try {
+            y = Integer.parseInt(args[1]);
+        } catch (Exception e) {
+            HtRacePads.plugin.getLogger().severe("Invalid jump pad value at " + loc + "|| y is apparently =" + Integer.parseInt(args[1]));
             return;
         }
+        player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 10, y));
+
 
         if (player.hasPotionEffect(PotionEffectType.JUMP_BOOST)) {
             player.getWorld().spawnParticle(Particle.CLOUD, player.getLocation(), 30, 0.5, 0.5, 0.5, 0.05);
