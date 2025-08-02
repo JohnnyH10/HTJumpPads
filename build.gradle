@@ -22,6 +22,10 @@ repositories {
         name = "noxcrewMaven"
         url = uri("https://maven.noxcrew.com/public/")
     }
+    maven {
+        name "neonRepositoryReleases"
+        url "https://repo.superneon4ik.me/releases"
+    }
 
     flatDir {
         dirs 'libs'
@@ -32,13 +36,16 @@ shadowJar {
     archiveBaseName.set('HTRacePads')
     archiveVersion.set("1.0-SNAPSHOT")
     archiveClassifier.set('fat')
+    dependencies {
+        include(dependency('me.superneon4ik:NoxesiumUtils:3.0.0-dev'))
+        include(dependency('com.noxcrew.noxesium:api:2.7.3'))
+    }
 }
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21.4-R0.1-SNAPSHOT")
     implementation 'org.bstats:bstats-bukkit:3.0.2'
-
-    implementation("com.noxcrew.noxesium:paper:2.7.3")
+    implementation 'me.superneon4ik:NoxesiumUtils:3.0.0-dev'
     implementation("com.noxcrew.noxesium:api:2.7.3")
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 }

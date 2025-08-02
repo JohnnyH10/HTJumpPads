@@ -12,6 +12,7 @@ import org.bukkit.potion.PotionEffectType;
 public class GivePotionEffectPad implements PadAction {
     @Override
     public void execute(String[] args, Location loc, Player player, boolean isJump, ItemStack item) {
+
         if (isJump) return; // Only trigger on walk-over
         HtRacePads.playerCoolDownPad(player.getUniqueId(), 5, HtRacePads.plugin);
 

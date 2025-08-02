@@ -1,12 +1,17 @@
 package me.johnnyht.race;
 
+import com.noxcrew.noxesium.api.qib.QibDefinition;
+import com.noxcrew.noxesium.api.qib.QibEffect;
 import me.johnnyht.race.Commands.PadGiveCommand;
 import me.johnnyht.race.Pads.PadAction;
 import me.johnnyht.race.Pads.PadTypes.Jump.Player.JumpPad;
 import me.johnnyht.race.Pads.PadTypes.Jump.Player.LaunchPad;
 import me.johnnyht.race.Pads.PadTypes.Run.Player.*;
 import me.johnnyht.race.Pads.PadTypes.Run.Vehicles.*;
+import me.johnnyht.race.Pads.noxesium.QuibsDefinitions;
 import me.johnnyht.race.bstats.Metrics;
+import me.superneon4ik.noxesiumutils.NoxesiumUtils;
+import me.superneon4ik.noxesiumutils.config.NoxesiumUtilsConfigBuilder;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.*;
@@ -18,6 +23,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+
 import java.util.*;
 
 public final class HtRacePads extends JavaPlugin implements Listener {
@@ -26,6 +32,10 @@ public final class HtRacePads extends JavaPlugin implements Listener {
     public static HtRacePads plugin;
     public static final Map<String, PadAction> padActions = new HashMap<>();
 
+    public NoxesiumUtils noxesiumUtils;
+
+
+
     @Override
     public void onEnable() {
         plugin = this;
@@ -33,6 +43,42 @@ public final class HtRacePads extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(this, this);
         getCommand("givepads").setExecutor(new PadGiveCommand());
         registerPads();
+
+        /*
+        var jumpEffect = new QibEffect.GivePotionEffect(
+                "minecraft",
+                "jump_boost",
+                10,
+                5,
+                true,
+                true,
+                true
+        );
+
+        var jumpDef = new QibDefinition(
+                jumpEffect,
+                null,
+                jumpEffect,
+                null,
+                false
+        );
+        */
+
+        //This is because I am shading the jar
+        var config = new NoxesiumUtilsConfigBuilder().build();
+        new QuibsDefinitions(config);
+        config.setCheckForUpdates(false);
+        config.getDefaults().disableSpinAttackCollisions = true;
+
+        //config.getQibDefinitions().put("jump", jumpDef);
+
+        this.noxesiumUtils = new NoxesiumUtils(plugin, config, plugin.getLogger());
+        this.noxesiumUtils.register();
+
+
+
+
+
 
 
 
