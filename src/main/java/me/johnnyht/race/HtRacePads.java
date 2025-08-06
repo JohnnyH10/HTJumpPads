@@ -24,17 +24,18 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 
-import java.util.*;
 
 public final class HtRacePads extends JavaPlugin implements Listener {
 
-    public static List<UUID> playersNoMoreJump = new ArrayList<>();
-    public static Set<UUID> uuidHasNox = new HashSet<>();
+    public static final NamespacedKey PAD_ITEM = new NamespacedKey(HtRacePads.getInstance(),"pad_item");
+
     public static HtRacePads plugin;
-    public static final Map<String, PadAction> padActions = new HashMap<>();
+    private static Logger log;
 
-    public NoxesiumUtils noxesiumUtils;
-
+    private static List<UUID> playersNoMoreJump;
+    private Set<UUID> uuidHasNox;
+    private Map<String, PadAction> padActions;
+    private NoxesiumUtils noxesiumUtils;
 
 
     @Override

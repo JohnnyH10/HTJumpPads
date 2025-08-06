@@ -14,7 +14,6 @@ public class EquipPad implements PadAction {
     @Override
     public void execute(String[] args, Location loc, Player player, boolean isJump, ItemStack item) {
         if (isJump) return; // Equip pad only triggers on walk-over
-        HtRacePads.playerCoolDownPad(player.getUniqueId(), 5, HtRacePads.plugin);
 
         if (item != null && item.getType() != Material.AIR) {
             ItemMeta meta = item.getItemMeta();
