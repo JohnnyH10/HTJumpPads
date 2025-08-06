@@ -41,7 +41,6 @@ public final class HtRacePads extends JavaPlugin implements Listener {
     public void onEnable() {
         plugin = this;
         getLogger().info("JumpPad Plugin Enabled!");
-        getServer().getPluginManager().registerEvents(this, this);
         getCommand("givepads").setExecutor(new PadGiveCommand());
         new RegisterCommands(this).registerCommands();
         registerPads();
@@ -76,6 +75,8 @@ public final class HtRacePads extends JavaPlugin implements Listener {
 
         this.noxesiumUtils = new NoxesiumUtils(plugin, config, plugin.getLogger());
         this.noxesiumUtils.register();
+
+        getServer().getPluginManager().registerEvents(this, this);
 
         int pluginId = 25452;
         Metrics metrics = new Metrics(this, pluginId);
