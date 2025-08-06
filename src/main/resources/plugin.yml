@@ -6,3 +6,7 @@ commands:
   givepads:
     description: Gives the player a shulker box with one of each pad item
     usage: /givepads
+  addmessage:
+    description: Add yourself to message list
+  removemessage:
+    description: Remove yourself from message list
