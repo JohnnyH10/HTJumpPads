@@ -1,5 +1,6 @@
 package me.johnnyht.race;
 
+import com.noxcrew.noxesium.paper.api.event.NoxesiumPlayerRegisteredEvent;
 import me.johnnyht.race.CommandManager.commands.PadGiveCommand;
 import me.johnnyht.race.CommandManager.RegisterCommands;
 import me.johnnyht.race.Pads.PadAction;
@@ -28,6 +29,7 @@ import java.util.*;
 public final class HtRacePads extends JavaPlugin implements Listener {
 
     public static List<UUID> playersNoMoreJump = new ArrayList<>();
+    public static Set<UUID> uuidHasNox = new HashSet<>();
     public static HtRacePads plugin;
     public static final Map<String, PadAction> padActions = new HashMap<>();
 
@@ -96,6 +98,10 @@ public final class HtRacePads extends JavaPlugin implements Listener {
         padActions.put("swimlaunch", new SwimLaunchPad());
     }
 
+    @EventHandler
+    public void noxPlayerRegister(NoxesiumPlayerRegisteredEvent e){
+        uuidHasNox.add(e.getPlayer().getUniqueId());
+    }
 
     @EventHandler
     public void onPlayerJump(PlayerMoveEvent event) {
@@ -143,4 +149,6 @@ public final class HtRacePads extends JavaPlugin implements Listener {
             }
         }.runTaskLater(plugin, timeTicks);
     }
+
+
 }

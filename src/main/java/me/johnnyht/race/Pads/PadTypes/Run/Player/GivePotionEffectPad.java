@@ -15,6 +15,8 @@ public class GivePotionEffectPad implements PadAction {
     public void execute(String[] args, Location loc, Player player, boolean isJump, ItemStack item) {
 
         if (isJump) return; // Only trigger on walk-over
+        if (HtRacePads.uuidHasNox.contains(player.getUniqueId())) return;
+
         HtRacePads.playerCoolDownPad(player.getUniqueId(), 5, HtRacePads.plugin);
 
         if (args.length < 3) {

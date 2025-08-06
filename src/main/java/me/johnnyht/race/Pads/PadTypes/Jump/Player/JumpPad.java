@@ -13,6 +13,7 @@ public class JumpPad implements PadAction {
     @Override
     public void execute(String[] args, Location loc, Player player, boolean isJump, ItemStack item) {
         if (!isJump) return; // Launch pad only triggers on jump
+        if (HtRacePads.uuidHasNox.contains(player.getUniqueId())) return;
 
         int y;
         try {

@@ -13,6 +13,7 @@ public class SpeedPad implements PadAction {
     @Override
     public void execute(String[] args, Location loc, Player player, boolean isJump, ItemStack item) {
         if (isJump) return; // Speed pad only triggers on walk-over
+        if (HtRacePads.uuidHasNox.contains(player.getUniqueId())) return;
 
         HtRacePads.playerCoolDownPad(player.getUniqueId(), 5, HtRacePads.plugin);
         int time, amplifier;

@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public class ClearInventoryPad implements PadAction {
+
     @Override
     public void execute(String[] args, Location loc, Player player, boolean isJump, ItemStack item) {
         if (isJump) return; // Only trigger on walk-over

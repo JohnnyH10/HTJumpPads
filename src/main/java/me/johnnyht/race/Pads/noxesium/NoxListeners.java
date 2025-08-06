@@ -20,8 +20,6 @@ import java.util.List;
 
 public class NoxListeners implements Listener {
 
-
-
     NoxesiumUtilsConfig config;
 
     public NoxListeners(NoxesiumUtilsConfig config) {
@@ -80,7 +78,12 @@ public class NoxListeners implements Listener {
 
     @EventHandler
     public void unLoadChunk(ChunkUnloadEvent e){
-
+        var entities = e.getChunk().getEntities();
+        for (Entity entity : entities) {
+            if (entity.getType() == EntityType.INTERACTION){
+                entity.remove();
+            }
+        }
     }
 
 
