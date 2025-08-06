@@ -27,7 +27,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public final class HtRacePads extends JavaPlugin implements Listener {
 
-    public static final NamespacedKey PAD_ITEM = new NamespacedKey(HtRacePads.getInstance(),"pad_item");
+    //public static final NamespacedKey PAD_ITEM = new NamespacedKey(HtRacePads.getInstance(),"pad_item");
 
     public static HtRacePads plugin;
     private static Logger log;

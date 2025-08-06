@@ -37,8 +37,11 @@ shadowJar {
     archiveVersion.set("1.0-SNAPSHOT")
     archiveClassifier.set('fat')
     dependencies {
+        /*
         include(dependency('com.noxcrew.noxesium:api:2.7.3'))
         include(dependency('me.superneon4ik:NoxesiumUtils:3.0.0-dev'))
+
+         */
     }
 }
 
