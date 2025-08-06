@@ -13,22 +13,22 @@ public class SpeedPad implements PadAction {
     @Override
     public void execute(String[] args, Location loc, Player player, boolean isJump, ItemStack item) {
         if (isJump) return; // Speed pad only triggers on walk-over
-        if (HtRacePads.uuidHasNox.contains(player.getUniqueId())) return;
+        //if (HtRacePads.getInstance().getNoxesiumPlayers().contains(player.getUniqueId())) return;
 
-        HtRacePads.playerCoolDownPad(player.getUniqueId(), 5, HtRacePads.plugin);
+        HtRacePads.playerCoolDownPad(player.getUniqueId(), 5, HtRacePads.getInstance());
         int time, amplifier;
 
         try {
             time = Integer.parseInt(args[1]);
         } catch (NumberFormatException e) {
-            HtRacePads.plugin.getLogger().severe("Failed to parse int speed time value for speed pad at location " + loc + ". Input: " + args[1]);
+            HtRacePads.getInstance().getLogger().severe("Failed to parse int speed time value for speed pad at location " + loc + ". Input: " + args[1]);
             return;
         }
 
         try {
             amplifier = Integer.parseInt(args[2]);
         } catch (NumberFormatException e) {
-            HtRacePads.plugin.getLogger().severe("Failed to parse int speed amplifier value for speed pad at location " + loc + ". Input: " + args[2]);
+            HtRacePads.getInstance().getLogger().severe("Failed to parse int speed amplifier value for speed pad at location " + loc + ". Input: " + args[2]);
             return;
         }
 

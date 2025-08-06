@@ -12,9 +12,13 @@ import me.johnnyht.race.Pads.noxesium.QuibsDefinitions;
 import me.johnnyht.race.bstats.Metrics;
 import me.superneon4ik.noxesiumutils.NoxesiumUtils;
 import me.superneon4ik.noxesiumutils.config.NoxesiumUtilsConfigBuilder;
-import org.bukkit.*;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
-import org.bukkit.entity.*;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.ItemFrame;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -23,6 +27,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.*;
+import java.util.logging.Logger;
 
 
 public final class HtRacePads extends JavaPlugin implements Listener {
@@ -41,6 +47,12 @@ public final class HtRacePads extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
         plugin = this;
+        log = getLogger();
+
+        playersNoMoreJump = new ArrayList<>();
+        uuidHasNox = new HashSet<>();
+        padActions = new HashMap<>();
+
         getLogger().info("JumpPad Plugin Enabled!");
         getCommand("givepads").setExecutor(new PadGiveCommand());
         new RegisterCommands(this).registerCommands();
@@ -74,7 +86,7 @@ public final class HtRacePads extends JavaPlugin implements Listener {
 
         //config.getQibDefinitions().put("jump", jumpDef);
 
-        this.noxesiumUtils = new NoxesiumUtils(plugin, config, plugin.getLogger());
+        this.noxesiumUtils = new NoxesiumUtils(getInstance(), config, getLog());
         this.noxesiumUtils.register();
 
         getServer().getPluginManager().registerEvents(this, this);
@@ -126,10 +138,33 @@ public final class HtRacePads extends JavaPlugin implements Listener {
         }
     }
 
+    public static HtRacePads getInstance() {
+        return plugin;
+    }
 
-    public static void executePadAction(String nameOfItemFrame, Location itemFrameLocation, Player player, boolean isJump, ItemStack item) {
+    public static Logger getLog() {
+        return log;
+    }
+
+    public List<UUID> getPlayersOnCooldown() {
+        return playersNoMoreJump;
+    }
+
+    public Set<UUID> getNoxesiumPlayers() {
+        return uuidHasNox;
+    }
+
+    public Map<String, PadAction> getPadActions() {
+        return padActions;
+    }
+
+    public NoxesiumUtils getNoxesiumUtils() {
+        return noxesiumUtils;
+    }
+
+    public void executePadAction(String nameOfItemFrame, Location itemFrameLocation, Player player, boolean isJump, ItemStack item) {
         List<String> parts = Arrays.asList(nameOfItemFrame.split("\\s+"));
-        String padType = parts.get(0).toLowerCase(); // Ensure the key is lowercase
+        String padType = parts.getFirst().toLowerCase(); // Ensure the key is lowercase
 
         PadAction action = padActions.get(padType);
         if (action != null) {
@@ -138,7 +173,7 @@ public final class HtRacePads extends JavaPlugin implements Listener {
             action.execute(args, itemFrameLocation, player, isJump, item);
         } else {
             // Handle unknown pad types if necessary
-            plugin.getLogger().warning("Unknown pad type: " + padType + " at location " + itemFrameLocation);
+            getLog().warning("Unknown pad type: " + padType + " at location " + itemFrameLocation);
         }
     }
 

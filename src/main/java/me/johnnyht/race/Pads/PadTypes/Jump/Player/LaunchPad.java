@@ -12,20 +12,20 @@ public class LaunchPad implements PadAction {
     public void execute(String[] args, Location loc, Player player, boolean isJump, ItemStack item) {
         if (!isJump) return; // Launch pad only triggers on jump
 
-        HtRacePads.playerCoolDownPad(player.getUniqueId(), 5, HtRacePads.plugin);
+        HtRacePads.getInstance().playerCoolDownPad(player.getUniqueId(), 5, HtRacePads.getInstance());
 
         double x, y;
         try {
             x = Double.parseDouble(args[1]);
         } catch (NumberFormatException e) {
-            HtRacePads.plugin.getLogger().severe("Failed to parse double X value for launch pad at location " + loc + ". Input: " + args[1]);
+            HtRacePads.getInstance().getLogger().severe("Failed to parse double X value for launch pad at location " + loc + ". Input: " + args[1]);
             return;
         }
 
         try {
             y = Double.parseDouble(args[2]);
         } catch (NumberFormatException e) {
-            HtRacePads.plugin.getLogger().severe("Failed to parse double Y value for launch pad at location " + loc + ". Input: " + args[2]);
+            HtRacePads.getLog().severe("Failed to parse double Y value for launch pad at location " + loc + ". Input: " + args[2]);
             return;
         }
 

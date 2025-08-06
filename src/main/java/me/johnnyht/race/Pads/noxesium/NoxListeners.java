@@ -48,21 +48,21 @@ public class NoxListeners implements Listener {
                         case "jump":
                             QuibsDefinitions.makeQuibDifinition(parts,meta.getDisplayName(),"jump_boost",10, parts.get(1));
                             Entity interaction = QuibsDefinitions.makeInteractionPadEntity(entity.getLocation().subtract(-1.5, 0, -1.5));
-                            var entityRule = HtRacePads.plugin.noxesiumUtils.getEntityRuleManager().getEntityRule(interaction, EntityRuleIndices.QIB_BEHAVIOR);
+                            var entityRule = HtRacePads.getInstance().getNoxesiumUtils().getEntityRuleManager().getEntityRule(interaction, EntityRuleIndices.QIB_BEHAVIOR);
                             if (entityRule == null) continue;
                             entityRule.setValue(meta.getDisplayName());
                             break;
                         case "speed":
                             QuibsDefinitions.makeQuibDifinition(parts,meta.getDisplayName(),"speed", Integer.parseInt(parts.get(1)), parts.get(2));
                             Entity interactionSpeed = QuibsDefinitions.makeInteractionPadEntity(entity.getLocation().subtract(-1.5, 0, -1.5));
-                            var speedRule = HtRacePads.plugin.noxesiumUtils.getEntityRuleManager().getEntityRule(interactionSpeed, EntityRuleIndices.QIB_BEHAVIOR);
+                            var speedRule = HtRacePads.getInstance().getNoxesiumUtils().getEntityRuleManager().getEntityRule(interactionSpeed, EntityRuleIndices.QIB_BEHAVIOR);
                             if (speedRule == null) continue;
                             speedRule.setValue(meta.getDisplayName());
                             break;
                         case "givepotioneffect":
                             QuibsDefinitions.makeQuibDifinition(parts,meta.getDisplayName(), parts.get(1) ,Integer.parseInt(parts.get(2)), parts.get(3));
                             Entity interactionEffect = QuibsDefinitions.makeInteractionPadEntity(entity.getLocation().subtract(-1.5, 0, -1.5));
-                            var effectRule = HtRacePads.plugin.noxesiumUtils.getEntityRuleManager().getEntityRule(interactionEffect, EntityRuleIndices.QIB_BEHAVIOR);
+                            var effectRule = HtRacePads.getInstance().getNoxesiumUtils().getEntityRuleManager().getEntityRule(interactionEffect, EntityRuleIndices.QIB_BEHAVIOR);
                             if (effectRule == null) continue;
                             effectRule.setValue(meta.getDisplayName());
                             break;

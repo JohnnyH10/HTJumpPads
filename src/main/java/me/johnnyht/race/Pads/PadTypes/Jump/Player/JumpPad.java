@@ -13,13 +13,13 @@ public class JumpPad implements PadAction {
     @Override
     public void execute(String[] args, Location loc, Player player, boolean isJump, ItemStack item) {
         if (!isJump) return; // Launch pad only triggers on jump
-        if (HtRacePads.uuidHasNox.contains(player.getUniqueId())) return;
+        //if (HtRacePads.getInstance().getNoxesiumPlayers().contains(player.getUniqueId())) return;
 
         int y;
         try {
             y = Integer.parseInt(args[1]);
         } catch (Exception e) {
-            HtRacePads.plugin.getLogger().severe("Invalid jump pad value at " + loc + "|| y is apparently =" + Integer.parseInt(args[1]));
+            HtRacePads.getLog().severe("Invalid jump pad value at " + loc + "|| y is apparently =" + Integer.parseInt(args[1]));
             return;
         }
         player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 10, y));
@@ -29,6 +29,6 @@ public class JumpPad implements PadAction {
             player.getWorld().spawnParticle(Particle.CLOUD, player.getLocation(), 30, 0.5, 0.5, 0.5, 0.05);
         }
         player.removePotionEffect(PotionEffectType.JUMP_BOOST);
-        HtRacePads.playerCoolDownPad(player.getUniqueId(), 5, HtRacePads.plugin);
+        HtRacePads.getInstance().playerCoolDownPad(player.getUniqueId(), 5, HtRacePads.getInstance());
     }
 }
