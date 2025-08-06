@@ -12,7 +12,7 @@ import org.bukkit.potion.PotionEffectType;
 public class JumpPad implements PadAction {
     @Override
     public void execute(String[] args, Location loc, Player player, boolean isJump, ItemStack item) {
-        if (!isJump) return; // Launch pad only triggers on jump
+
         //if (HtRacePads.getInstance().getNoxesiumPlayers().contains(player.getUniqueId())) return;
 
         int y;
@@ -25,10 +25,11 @@ public class JumpPad implements PadAction {
         player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 10, y));
 
 
-        if (player.hasPotionEffect(PotionEffectType.JUMP_BOOST)) {
+        if (player.hasPotionEffect(PotionEffectType.JUMP_BOOST) && isJump) {
             player.getWorld().spawnParticle(Particle.CLOUD, player.getLocation(), 30, 0.5, 0.5, 0.5, 0.05);
+            player.removePotionEffect(PotionEffectType.JUMP_BOOST);
         }
-        player.removePotionEffect(PotionEffectType.JUMP_BOOST);
+
         HtRacePads.getInstance().playerCoolDownPad(player.getUniqueId(), 5, HtRacePads.getInstance());
     }
 }
