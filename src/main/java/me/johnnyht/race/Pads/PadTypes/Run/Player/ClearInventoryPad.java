@@ -42,6 +42,11 @@ public class ClearInventoryPad implements PadAction {
             case "hand":
                 clearAllExceptArmor(inv);
                 break;
+            case null:
+                clearSlot(inv, 38);
+                clearSlot(inv, 37);
+                clearSlot(inv, 36);
+                clearAllExceptArmor(inv);
             default:
                 player.sendMessage(ChatColor.RED + "Invalid equip slot: " + slotArg);
         }
