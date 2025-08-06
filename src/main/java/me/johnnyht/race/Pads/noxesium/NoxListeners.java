@@ -2,11 +2,8 @@ package me.johnnyht.race.Pads.noxesium;
 
 
 import com.noxcrew.noxesium.api.protocol.rule.EntityRuleIndices;
-import com.noxcrew.noxesium.api.qib.QibDefinition;
-import com.noxcrew.noxesium.api.qib.QibEffect;
 import me.johnnyht.race.HtRacePads;
 import me.superneon4ik.noxesiumutils.config.NoxesiumUtilsConfig;
-import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -17,8 +14,6 @@ import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
 import java.util.Arrays;
 import java.util.List;
@@ -59,13 +54,6 @@ public class NoxListeners implements Listener {
                             if (entityRule == null) continue;
                             entityRule.setValue(meta.getDisplayName());
                             break;
-                        case "launch":
-                            QuibsDefinitions.makeQuibDifinition(parts,meta.getDisplayName(),"jump_boost",10, parts.get(1));
-                            Entity interaction = QuibsDefinitions.makeInteractionPadEntity(entity.getLocation().subtract(-1.5, 0, -1.5));
-                            var entityRule = HtRacePads.plugin.noxesiumUtils.getEntityRuleManager().getEntityRule(interaction, EntityRuleIndices.QIB_BEHAVIOR);
-                            if (entityRule == null) continue;
-                            entityRule.setValue(meta.getDisplayName());
-                            break;
                         case "speed":
                             QuibsDefinitions.makeQuibDifinition(parts,meta.getDisplayName(),"speed", Integer.parseInt(parts.get(1)), parts.get(2));
                             Entity interactionSpeed = QuibsDefinitions.makeInteractionPadEntity(entity.getLocation().subtract(-1.5, 0, -1.5));
@@ -80,10 +68,6 @@ public class NoxListeners implements Listener {
                             if (effectRule == null) continue;
                             effectRule.setValue(meta.getDisplayName());
                             break;
-                        case "removepotioneffect":
-
-                            break;
-
                     }
 
 

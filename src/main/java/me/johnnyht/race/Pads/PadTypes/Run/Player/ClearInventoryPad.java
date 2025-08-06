@@ -1,5 +1,6 @@
 package me.johnnyht.race.Pads.PadTypes.Run.Player;
 
+import me.johnnyht.race.CommandManager.commands.SendPlayersMessages;
 import me.johnnyht.race.HtRacePads;
 import me.johnnyht.race.Pads.PadAction;
 import org.bukkit.ChatColor;
@@ -14,6 +15,9 @@ public class ClearInventoryPad implements PadAction {
         HtRacePads.playerCoolDownPad(player.getUniqueId(), 5, HtRacePads.plugin);
 
         player.getInventory().clear();
-        player.sendMessage(ChatColor.RED + "Your inventory has been cleared!");
+
+        if (SendPlayersMessages.uuidSetMessages.contains(player.getUniqueId())) {
+            player.sendMessage(ChatColor.RED + "Your inventory has been cleared!");
+        }
     }
 }

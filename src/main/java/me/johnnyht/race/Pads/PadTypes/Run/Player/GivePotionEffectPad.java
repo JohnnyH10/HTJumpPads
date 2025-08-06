@@ -1,5 +1,6 @@
 package me.johnnyht.race.Pads.PadTypes.Run.Player;
 
+import me.johnnyht.race.CommandManager.commands.SendPlayersMessages;
 import me.johnnyht.race.HtRacePads;
 import me.johnnyht.race.Pads.PadAction;
 import org.bukkit.ChatColor;
@@ -53,8 +54,10 @@ public class GivePotionEffectPad implements PadAction {
         }
 
         player.addPotionEffect(new PotionEffect(effectType, duration, amplifier));
-        player.sendMessage(ChatColor.GREEN + "Applied potion effect: " + effectType.getName() +
-                (duration == Integer.MAX_VALUE ? " infinitely" : " for " + duration + " ticks") +
-                " with amplifier " + amplifier + ".");
+        if (SendPlayersMessages.uuidSetMessages.contains(player.getUniqueId())) {
+            player.sendMessage(ChatColor.GREEN + "Applied potion effect: " + effectType.getName() +
+                    (duration == Integer.MAX_VALUE ? " infinitely" : " for " + duration + " ticks") +
+                    " with amplifier " + amplifier + ".");
+        }
     }
 }

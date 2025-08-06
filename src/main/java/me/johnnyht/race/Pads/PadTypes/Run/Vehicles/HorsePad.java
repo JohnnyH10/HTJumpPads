@@ -1,5 +1,6 @@
 package me.johnnyht.race.Pads.PadTypes.Run.Vehicles;
 
+import me.johnnyht.race.CommandManager.commands.SendPlayersMessages;
 import me.johnnyht.race.HtRacePads;
 import me.johnnyht.race.Pads.PadAction;
 import org.bukkit.ChatColor;
@@ -50,6 +51,8 @@ public class HorsePad implements PadAction {
         horse.getAttribute(Attribute.JUMP_STRENGTH).setBaseValue(jump);
 
         horse.addPassenger(player);
-        player.sendMessage(ChatColor.YELLOW + "Spawned a horse with speed: " + speed + " and jump: " + jump + "!");
+        if (SendPlayersMessages.uuidSetMessages.contains(player.getUniqueId())) {
+            player.sendMessage(ChatColor.YELLOW + "Spawned a horse with speed: " + speed + " and jump: " + jump + "!");
+        }
     }
 }

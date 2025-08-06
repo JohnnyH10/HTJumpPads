@@ -1,4 +1,4 @@
-package me.johnnyht.race.Commands;
+package me.johnnyht.race.CommandManager.commands;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -11,14 +11,11 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BlockStateMeta;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PadGiveCommand implements CommandExecutor {
-
-
 
     private ItemStack createPad(String name, Material material) {
         ItemStack item = new ItemStack(material);

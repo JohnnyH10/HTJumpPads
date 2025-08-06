@@ -1,5 +1,6 @@
 package me.johnnyht.race.Pads.PadTypes.Run.Player;
 
+import me.johnnyht.race.CommandManager.commands.SendPlayersMessages;
 import me.johnnyht.race.HtRacePads;
 import me.johnnyht.race.Pads.PadAction;
 import org.bukkit.Location;
@@ -31,7 +32,9 @@ public class SwimLaunchPad implements PadAction {
 
         Location playerEyeLocation = player.getEyeLocation();
         player.setVelocity(playerEyeLocation.getDirection().setY(0).normalize().multiply(x).setY(y));
-        player.sendMessage("§aSwim Launch! + " + x + " " + y); // Changed message for clarity
+        if (SendPlayersMessages.uuidSetMessages.contains(player.getUniqueId())) {
+            player.sendMessage("§aSwim Launch! + " + x + " " + y); // Changed message for clarity
+        }
         player.getWorld().spawnParticle(Particle.CLOUD, player.getLocation(), 30, 0.5, 0.5, 0.5, 0.05);
     }
 }

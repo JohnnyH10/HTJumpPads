@@ -1,8 +1,7 @@
 package me.johnnyht.race;
 
-import com.noxcrew.noxesium.api.qib.QibDefinition;
-import com.noxcrew.noxesium.api.qib.QibEffect;
-import me.johnnyht.race.Commands.PadGiveCommand;
+import me.johnnyht.race.CommandManager.commands.PadGiveCommand;
+import me.johnnyht.race.CommandManager.RegisterCommands;
 import me.johnnyht.race.Pads.PadAction;
 import me.johnnyht.race.Pads.PadTypes.Jump.Player.JumpPad;
 import me.johnnyht.race.Pads.PadTypes.Jump.Player.LaunchPad;
@@ -42,6 +41,7 @@ public final class HtRacePads extends JavaPlugin implements Listener {
         getLogger().info("JumpPad Plugin Enabled!");
         getServer().getPluginManager().registerEvents(this, this);
         getCommand("givepads").setExecutor(new PadGiveCommand());
+        new RegisterCommands(this).registerCommands();
         registerPads();
 
         /*
@@ -74,13 +74,6 @@ public final class HtRacePads extends JavaPlugin implements Listener {
 
         this.noxesiumUtils = new NoxesiumUtils(plugin, config, plugin.getLogger());
         this.noxesiumUtils.register();
-
-
-
-
-
-
-
 
         int pluginId = 25452;
         Metrics metrics = new Metrics(this, pluginId);

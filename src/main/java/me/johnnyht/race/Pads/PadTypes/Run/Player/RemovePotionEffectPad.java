@@ -1,5 +1,6 @@
 package me.johnnyht.race.Pads.PadTypes.Run.Player;
 
+import me.johnnyht.race.CommandManager.commands.SendPlayersMessages;
 import me.johnnyht.race.HtRacePads;
 import me.johnnyht.race.Pads.PadAction;
 import org.bukkit.ChatColor;
@@ -23,6 +24,8 @@ public class RemovePotionEffectPad implements PadAction {
             player.removePotionEffect(effect.getType());
         }
 
-        player.sendMessage(ChatColor.GREEN + "All active potion effects removed.");
+        if (SendPlayersMessages.uuidSetMessages.contains(player.getUniqueId())) {
+            player.sendMessage(ChatColor.GREEN + "All active potion effects removed.");
+        }
     }
 }

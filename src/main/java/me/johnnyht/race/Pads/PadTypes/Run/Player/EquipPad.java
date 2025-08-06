@@ -1,5 +1,6 @@
 package me.johnnyht.race.Pads.PadTypes.Run.Player;
 
+import me.johnnyht.race.CommandManager.commands.SendPlayersMessages;
 import me.johnnyht.race.HtRacePads;
 import me.johnnyht.race.Pads.PadAction;
 import org.bukkit.ChatColor;
@@ -24,7 +25,9 @@ public class EquipPad implements PadAction {
             }
 
             String slot = args[1].toLowerCase();
-            player.sendMessage("Equipping to " + slot); // More descriptive message
+            if (SendPlayersMessages.uuidSetMessages.contains(player.getUniqueId())) {
+                player.sendMessage("Equipping to " + slot); // More descriptive message
+            }
 
             switch (slot) {
                 case "head" -> player.getInventory().setHelmet(item);

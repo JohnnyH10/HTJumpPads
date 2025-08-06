@@ -5,7 +5,6 @@ import com.noxcrew.noxesium.api.qib.QibEffect;
 import me.superneon4ik.noxesiumutils.config.NoxesiumUtilsConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 

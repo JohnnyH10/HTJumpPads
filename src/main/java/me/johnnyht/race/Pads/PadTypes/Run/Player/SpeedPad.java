@@ -1,5 +1,6 @@
 package me.johnnyht.race.Pads.PadTypes.Run.Player;
 
+import me.johnnyht.race.CommandManager.commands.SendPlayersMessages;
 import me.johnnyht.race.HtRacePads;
 import me.johnnyht.race.Pads.PadAction;
 import org.bukkit.Location;
@@ -31,6 +32,8 @@ public class SpeedPad implements PadAction {
         }
 
         player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, time, amplifier));
-        player.sendMessage("§eSpeed...");
+        if (SendPlayersMessages.uuidSetMessages.contains(player.getUniqueId())) {
+            player.sendMessage("§eSpeed...");
+        }
     }
 }

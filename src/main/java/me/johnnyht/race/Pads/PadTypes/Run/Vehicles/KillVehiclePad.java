@@ -1,5 +1,6 @@
 package me.johnnyht.race.Pads.PadTypes.Run.Vehicles;
 
+import me.johnnyht.race.CommandManager.commands.SendPlayersMessages;
 import me.johnnyht.race.HtRacePads;
 import me.johnnyht.race.Pads.PadAction;
 import org.bukkit.ChatColor;
@@ -17,9 +18,13 @@ public class KillVehiclePad implements PadAction {
         Entity vehicle = player.getVehicle();
         if (vehicle != null) {
             vehicle.remove();
-            player.sendMessage(ChatColor.RED + "Your vehicle has been removed!");
+            if (SendPlayersMessages.uuidSetMessages.contains(player.getUniqueId())) {
+                player.sendMessage(ChatColor.RED + "Your vehicle has been removed!");
+            }
         } else {
-            player.sendMessage(ChatColor.YELLOW + "You're not in a vehicle.");
+            if (SendPlayersMessages.uuidSetMessages.contains(player.getUniqueId())) {
+                player.sendMessage(ChatColor.YELLOW + "You're not in a vehicle.");
+            }
         }
     }
 }

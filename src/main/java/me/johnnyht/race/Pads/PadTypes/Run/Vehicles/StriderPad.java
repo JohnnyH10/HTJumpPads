@@ -1,5 +1,6 @@
 package me.johnnyht.race.Pads.PadTypes.Run.Vehicles;
 
+import me.johnnyht.race.CommandManager.commands.SendPlayersMessages;
 import me.johnnyht.race.HtRacePads;
 import me.johnnyht.race.Pads.PadAction;
 import org.bukkit.ChatColor;
@@ -35,6 +36,8 @@ public class StriderPad implements PadAction {
         strider.addPassenger(player);
 
         player.getInventory().addItem(new ItemStack(Material.WARPED_FUNGUS_ON_A_STICK));
-        player.sendMessage(ChatColor.YELLOW + "Spawned a strider and gave you a warped fungus on a stick!");
+        if (SendPlayersMessages.uuidSetMessages.contains(player.getUniqueId())) {
+            player.sendMessage(ChatColor.YELLOW + "Spawned a strider and gave you a warped fungus on a stick!");
+        }
     }
 }
