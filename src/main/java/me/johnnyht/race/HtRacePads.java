@@ -1,6 +1,5 @@
 package me.johnnyht.race;
 
-import com.noxcrew.noxesium.paper.api.event.NoxesiumPlayerRegisteredEvent;
 import me.johnnyht.race.CommandManager.commands.PadGiveCommand;
 import me.johnnyht.race.CommandManager.RegisterCommands;
 import me.johnnyht.race.Pads.PadAction;
@@ -9,7 +8,6 @@ import me.johnnyht.race.Pads.PadTypes.Jump.Player.LaunchPad;
 import me.johnnyht.race.Pads.PadTypes.Run.Player.*;
 import me.johnnyht.race.Pads.PadTypes.Run.Vehicles.*;
 import me.johnnyht.race.bstats.Metrics;
-import me.superneon4ik.noxesiumutils.NoxesiumUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -39,7 +37,6 @@ public final class HtRacePads extends JavaPlugin implements Listener {
     private static List<UUID> playersNoMoreJump;
     private Set<UUID> uuidHasNox;
     private Map<String, PadAction> padActions;
-    private NoxesiumUtils noxesiumUtils;
 
 
     @Override
@@ -121,9 +118,6 @@ public final class HtRacePads extends JavaPlugin implements Listener {
         return padActions;
     }
 
-    public NoxesiumUtils getNoxesiumUtils() {
-        return noxesiumUtils;
-    }
 
     public void executePadAction(String nameOfItemFrame, Location itemFrameLocation, Player player, boolean isJump, ItemStack item) {
         List<String> parts = Arrays.asList(nameOfItemFrame.split("\\s+"));
