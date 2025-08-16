@@ -71,7 +71,7 @@ public final class HtRacePads extends JavaPlugin implements Listener {
         padActions.put("iceboat", new IceBoatPad());
         padActions.put("killvehicle", new KillVehiclePad());
         padActions.put("givepotioneffect", new GivePotionEffectPad());
-        padActions.put("removepotioneffect", new RemovePotionEffectPad());
+        padActions.put("potionremove", new RemovePotionEffectPad());
         padActions.put("clearinv", new ClearInventoryPad());
         padActions.put("swimlaunch", new SwimLaunchPad());
     }
