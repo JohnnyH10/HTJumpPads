@@ -8,10 +8,8 @@ import me.johnnyht.race.Pads.PadTypes.Jump.Player.JumpPad;
 import me.johnnyht.race.Pads.PadTypes.Jump.Player.LaunchPad;
 import me.johnnyht.race.Pads.PadTypes.Run.Player.*;
 import me.johnnyht.race.Pads.PadTypes.Run.Vehicles.*;
-import me.johnnyht.race.Pads.noxesium.QuibsDefinitions;
 import me.johnnyht.race.bstats.Metrics;
 import me.superneon4ik.noxesiumutils.NoxesiumUtils;
-import me.superneon4ik.noxesiumutils.config.NoxesiumUtilsConfigBuilder;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -58,37 +56,6 @@ public final class HtRacePads extends JavaPlugin implements Listener {
         new RegisterCommands(this).registerCommands();
         registerPads();
 
-        /*
-        var jumpEffect = new QibEffect.GivePotionEffect(
-                "minecraft",
-                "jump_boost",
-                10,
-                5,
-                true,
-                true,
-                true
-        );
-
-        var jumpDef = new QibDefinition(
-                jumpEffect,
-                null,
-                jumpEffect,
-                null,
-                false
-        );
-        */
-
-        //This is because I am shading the jar
-        var config = new NoxesiumUtilsConfigBuilder().build();
-        new QuibsDefinitions(config);
-        config.setCheckForUpdates(false);
-        config.getDefaults().disableSpinAttackCollisions = true;
-
-        //config.getQibDefinitions().put("jump", jumpDef);
-
-        this.noxesiumUtils = new NoxesiumUtils(getInstance(), config, getLog());
-        this.noxesiumUtils.register();
-
         getServer().getPluginManager().registerEvents(this, this);
 
         int pluginId = 25452;
@@ -112,10 +79,6 @@ public final class HtRacePads extends JavaPlugin implements Listener {
         padActions.put("swimlaunch", new SwimLaunchPad());
     }
 
-    @EventHandler
-    public void noxPlayerRegister(NoxesiumPlayerRegisteredEvent e){
-        uuidHasNox.add(e.getPlayer().getUniqueId());
-    }
 
     @EventHandler
     public void onPlayerJump(PlayerMoveEvent event) {

@@ -18,14 +18,7 @@ repositories {
         name = "sonatype"
         url = "https://oss.sonatype.org/content/groups/public/"
     }
-    maven {
-        name = "noxcrewMaven"
-        url = uri("https://maven.noxcrew.com/public/")
-    }
-    maven {
-        name "neonRepositoryReleases"
-        url "https://repo.superneon4ik.me/releases"
-    }
+
 
     flatDir {
         dirs 'libs'
