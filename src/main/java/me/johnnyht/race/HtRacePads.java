@@ -57,9 +57,12 @@ public final class HtRacePads extends JavaPlugin implements Listener {
 
         int pluginId = 25452;
         Metrics metrics = new Metrics(this, pluginId);
+
+        //ToDo we need to add Nox implementation to the pads as a toggleable feature in the config
     }
 
     private void registerPads() {
+
         padActions.put("jump", new JumpPad());
         padActions.put("launch", new LaunchPad());
         padActions.put("speed", new SpeedPad());
@@ -74,6 +77,8 @@ public final class HtRacePads extends JavaPlugin implements Listener {
         padActions.put("potionremove", new RemovePotionEffectPad());
         padActions.put("clearinv", new ClearInventoryPad());
         padActions.put("swimlaunch", new SwimLaunchPad());
+
+        //ToDo add Tp Pad
     }
 
 

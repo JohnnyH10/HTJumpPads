@@ -3,9 +3,11 @@ package me.johnnyht.race.Pads.PadTypes.Run.Vehicles;
 import me.johnnyht.race.CommandManager.commands.SendPlayersMessages;
 import me.johnnyht.race.HtRacePads;
 import me.johnnyht.race.Pads.PadAction;
+import me.johnnyht.race.Sound.PadSound;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Camel;
 import org.bukkit.entity.Player;
@@ -38,6 +40,8 @@ public class CamelPad implements PadAction {
             return;
         }
 
+
+
         Camel camel = player.getWorld().spawn(player.getLocation(), Camel.class);
         camel.setTamed(true);
         camel.setAdult();
@@ -47,6 +51,7 @@ public class CamelPad implements PadAction {
         camel.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(speed);
         camel.getAttribute(Attribute.JUMP_STRENGTH).setBaseValue(jump);
         camel.addPassenger(player);
+        PadSound.playSoundAtPlayer(player, "minecraft:entity.camel.ambient");
 
         if (SendPlayersMessages.uuidSetMessages.contains(player.getUniqueId())) {
             player.sendMessage(ChatColor.YELLOW + "Spawned a camel!");

@@ -3,6 +3,7 @@ package me.johnnyht.race.Pads.PadTypes.Run.Player;
 import me.johnnyht.race.CommandManager.commands.SendPlayersMessages;
 import me.johnnyht.race.HtRacePads;
 import me.johnnyht.race.Pads.PadAction;
+import me.johnnyht.race.Sound.PadSound;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -56,6 +57,8 @@ public class GivePotionEffectPad implements PadAction {
         }
 
         player.addPotionEffect(new PotionEffect(effectType, duration, amplifier));
+        PadSound.playSoundAtPlayer(player, "minecraft:entity.player.splash.high_speed");
+
         if (SendPlayersMessages.uuidSetMessages.contains(player.getUniqueId())) {
             player.sendMessage(ChatColor.GREEN + "Applied potion effect: " + effectType.getName() +
                     (duration == Integer.MAX_VALUE ? " infinitely" : " for " + duration + " ticks") +

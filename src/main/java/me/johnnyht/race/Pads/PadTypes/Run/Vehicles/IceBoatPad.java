@@ -3,6 +3,7 @@ package me.johnnyht.race.Pads.PadTypes.Run.Vehicles;
 import me.johnnyht.race.CommandManager.commands.SendPlayersMessages;
 import me.johnnyht.race.HtRacePads;
 import me.johnnyht.race.Pads.PadAction;
+import me.johnnyht.race.Sound.PadSound;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Boat;
@@ -31,11 +32,14 @@ public class IceBoatPad implements PadAction {
             boat.setCustomName(ChatColor.AQUA + player.getName() + "'s Ice Boat");
             boat.setCustomNameVisible(true);
             boat.addPassenger(player);
+            PadSound.playSoundAtPlayer(player, "entity.item.pickup");
             if (SendPlayersMessages.uuidSetMessages.contains(player.getUniqueId())) {
                 player.sendMessage(ChatColor.AQUA + "Spawned an ice boat!");
             }
         } else {
-            player.sendMessage(ChatColor.RED + "Failed to spawn boat.");
+            if (SendPlayersMessages.uuidSetMessages.contains(player.getUniqueId())) {
+                player.sendMessage(ChatColor.RED + "Failed to spawn boat.");
+            }
         }
     }
 }

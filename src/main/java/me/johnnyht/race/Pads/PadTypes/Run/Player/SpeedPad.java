@@ -3,6 +3,7 @@ package me.johnnyht.race.Pads.PadTypes.Run.Player;
 import me.johnnyht.race.CommandManager.commands.SendPlayersMessages;
 import me.johnnyht.race.HtRacePads;
 import me.johnnyht.race.Pads.PadAction;
+import me.johnnyht.race.Sound.PadSound;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -33,6 +34,8 @@ public class SpeedPad implements PadAction {
         }
 
         player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, time, amplifier));
+        PadSound.playSoundAtPlayer(player, "minecraft:entity.cat.purreow");
+
         if (SendPlayersMessages.uuidSetMessages.contains(player.getUniqueId())) {
             player.sendMessage("§eSpeed...");
         }

@@ -3,6 +3,7 @@ package me.johnnyht.race.Pads.PadTypes.Run.Player;
 import me.johnnyht.race.CommandManager.commands.SendPlayersMessages;
 import me.johnnyht.race.HtRacePads;
 import me.johnnyht.race.Pads.PadAction;
+import me.johnnyht.race.Sound.PadSound;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -55,6 +56,7 @@ public class EquipPad implements PadAction {
             case "hand" -> player.getInventory().addItem(item);
             default -> player.sendMessage(ChatColor.RED + "Invalid equip slot: " + slot);
         }
+        PadSound.playSoundAtPlayer(player, "entity.item.pickup");
     }
 
     private boolean checkIfPlayerHasItem(ItemStack itemToCheck, Inventory inv) {

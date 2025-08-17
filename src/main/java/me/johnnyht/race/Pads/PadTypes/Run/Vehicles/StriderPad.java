@@ -3,6 +3,7 @@ package me.johnnyht.race.Pads.PadTypes.Run.Vehicles;
 import me.johnnyht.race.CommandManager.commands.SendPlayersMessages;
 import me.johnnyht.race.HtRacePads;
 import me.johnnyht.race.Pads.PadAction;
+import me.johnnyht.race.Sound.PadSound;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -18,7 +19,9 @@ public class StriderPad implements PadAction {
         HtRacePads.playerCoolDownPad(player.getUniqueId(), 5, HtRacePads.plugin);
 
         if (player.getVehicle() instanceof Strider) {
-            player.sendMessage(ChatColor.RED + "You are already riding a strider!");
+            if (SendPlayersMessages.uuidSetMessages.contains(player.getUniqueId())) {
+                player.sendMessage(ChatColor.RED + "You are already riding a strider!");
+            }
             return;
         }
 
@@ -34,6 +37,7 @@ public class StriderPad implements PadAction {
         strider.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(speed);
         strider.setSaddle(true);
         strider.addPassenger(player);
+        PadSound.playSoundAtPlayer(player, "minecraft:entity.strider.ambient");
 
         player.getInventory().addItem(new ItemStack(Material.WARPED_FUNGUS_ON_A_STICK));
         if (SendPlayersMessages.uuidSetMessages.contains(player.getUniqueId())) {

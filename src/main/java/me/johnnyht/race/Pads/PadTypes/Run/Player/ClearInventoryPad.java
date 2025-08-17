@@ -3,6 +3,7 @@ package me.johnnyht.race.Pads.PadTypes.Run.Player;
 import me.johnnyht.race.CommandManager.commands.SendPlayersMessages;
 import me.johnnyht.race.HtRacePads;
 import me.johnnyht.race.Pads.PadAction;
+import me.johnnyht.race.Sound.PadSound;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -46,6 +47,7 @@ public class ClearInventoryPad implements PadAction {
             case "hand" -> clearAllInventory(inv);
             default -> player.sendMessage(ChatColor.RED + "Invalid equip slot: " + slotArg);
         }
+        PadSound.playSoundAtPlayer(player, "minecraft:entity.player.burp");
     }
 
     private void clearSlot(Inventory inv, int slotIndex) {

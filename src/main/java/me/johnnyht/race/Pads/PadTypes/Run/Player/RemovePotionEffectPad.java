@@ -3,6 +3,7 @@ package me.johnnyht.race.Pads.PadTypes.Run.Player;
 import me.johnnyht.race.CommandManager.commands.SendPlayersMessages;
 import me.johnnyht.race.HtRacePads;
 import me.johnnyht.race.Pads.PadAction;
+import me.johnnyht.race.Sound.PadSound;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -29,6 +30,7 @@ public class RemovePotionEffectPad implements PadAction {
         for (PotionEffect effect : activeEffects) {
             player.removePotionEffect(effect.getType());
         }
+        PadSound.playSoundAtPlayer(player, "minecraft:entity.player.breath");
 
         if (SendPlayersMessages.uuidSetMessages.contains(player.getUniqueId())) {
             player.sendMessage(ChatColor.GREEN + "All active potion effects removed.");

@@ -3,6 +3,7 @@ package me.johnnyht.race.Pads.PadTypes.Run.Vehicles;
 import me.johnnyht.race.CommandManager.commands.SendPlayersMessages;
 import me.johnnyht.race.HtRacePads;
 import me.johnnyht.race.Pads.PadAction;
+import me.johnnyht.race.Sound.PadSound;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -18,6 +19,7 @@ public class KillVehiclePad implements PadAction {
         Entity vehicle = player.getVehicle();
         if (vehicle != null) {
             vehicle.remove();
+            PadSound.playSoundAtPlayer(player, "minecraft:entity.player.death");
             if (SendPlayersMessages.uuidSetMessages.contains(player.getUniqueId())) {
                 player.sendMessage(ChatColor.RED + "Your vehicle has been removed!");
             }

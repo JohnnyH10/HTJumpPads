@@ -3,6 +3,7 @@ package me.johnnyht.race.Pads.PadTypes.Run.Vehicles;
 import me.johnnyht.race.CommandManager.commands.SendPlayersMessages;
 import me.johnnyht.race.HtRacePads;
 import me.johnnyht.race.Pads.PadAction;
+import me.johnnyht.race.Sound.PadSound;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -49,6 +50,8 @@ public class HorsePad implements PadAction {
 
         horse.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(speed);
         horse.getAttribute(Attribute.JUMP_STRENGTH).setBaseValue(jump);
+        PadSound.playSoundAtPlayer(player, "minecraft:entity.horse.ambient");
+
 
         horse.addPassenger(player);
         if (SendPlayersMessages.uuidSetMessages.contains(player.getUniqueId())) {

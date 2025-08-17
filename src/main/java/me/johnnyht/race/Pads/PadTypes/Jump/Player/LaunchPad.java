@@ -3,6 +3,7 @@ package me.johnnyht.race.Pads.PadTypes.Jump.Player;
 import me.johnnyht.race.CommandManager.commands.SendPlayersMessages;
 import me.johnnyht.race.HtRacePads;
 import me.johnnyht.race.Pads.PadAction;
+import me.johnnyht.race.Sound.PadSound;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
@@ -36,5 +37,6 @@ public class LaunchPad implements PadAction {
             player.sendMessage("§aHigh Jump! + " + x + " " + y);
         }
         player.getWorld().spawnParticle(Particle.CLOUD, player.getLocation(), 30, 0.5, 0.5, 0.5, 0.05);
+        PadSound.playSoundAtPlayer(player, "entity.dragon_fireball.explode");
     }
 }

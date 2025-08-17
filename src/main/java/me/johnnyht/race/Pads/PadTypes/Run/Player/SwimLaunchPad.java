@@ -3,6 +3,7 @@ package me.johnnyht.race.Pads.PadTypes.Run.Player;
 import me.johnnyht.race.CommandManager.commands.SendPlayersMessages;
 import me.johnnyht.race.HtRacePads;
 import me.johnnyht.race.Pads.PadAction;
+import me.johnnyht.race.Sound.PadSound;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
@@ -32,6 +33,7 @@ public class SwimLaunchPad implements PadAction {
 
         Location playerEyeLocation = player.getEyeLocation();
         player.setVelocity(playerEyeLocation.getDirection().setY(0).normalize().multiply(x).setY(y));
+        PadSound.playSoundAtPlayer(player, "minecraft:entity.dolphin.ambient");
         if (SendPlayersMessages.uuidSetMessages.contains(player.getUniqueId())) {
             player.sendMessage("§aSwim Launch! + " + x + " " + y); // Changed message for clarity
         }

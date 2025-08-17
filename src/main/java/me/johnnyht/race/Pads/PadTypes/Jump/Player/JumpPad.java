@@ -2,6 +2,7 @@ package me.johnnyht.race.Pads.PadTypes.Jump.Player;
 
 import me.johnnyht.race.HtRacePads;
 import me.johnnyht.race.Pads.PadAction;
+import me.johnnyht.race.Sound.PadSound;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
@@ -28,6 +29,7 @@ public class JumpPad implements PadAction {
         if (player.hasPotionEffect(PotionEffectType.JUMP_BOOST) && isJump) {
             player.getWorld().spawnParticle(Particle.CLOUD, player.getLocation(), 30, 0.5, 0.5, 0.5, 0.05);
             player.removePotionEffect(PotionEffectType.JUMP_BOOST);
+            PadSound.playSoundAtPlayer(player, "entity.parrot.imitate.slime");
         }
 
         HtRacePads.getInstance().playerCoolDownPad(player.getUniqueId(), 5, HtRacePads.getInstance());
