@@ -36,6 +36,7 @@ public class ClearInventoryPad implements PadAction {
         if (slotArg == null) {
 
             clearAllInventory(inv);
+            PadSound.playSoundAtPlayer(player, "minecraft:entity.player.burp");
             return;
         }
 
