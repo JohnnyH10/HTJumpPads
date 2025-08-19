@@ -8,6 +8,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -53,28 +54,42 @@ public class EquipPad implements PadAction {
             case "chest" -> player.getInventory().setChestplate(item);
             case "legs" -> player.getInventory().setLeggings(item);
             case "boots" -> player.getInventory().setBoots(item);
-            case "hand" -> player.getInventory().addItem(item);
+            case "hand" -> giveItem(player, item);
             default -> player.sendMessage(ChatColor.RED + "Invalid equip slot: " + slot);
         }
         PadSound.playSoundAtPlayer(player, "entity.item.pickup",1.0f,1.0f);
     }
 
+    private void giveItem(Player player, ItemStack item) {
+        if (HtRacePads.getInstance().getServer().getPluginManager().isPluginEnabled("VelocityTridents")
+            && item.getType() == Material.TRIDENT && item.getItemMeta().hasEnchant(Enchantment.RIPTIDE)) {
+
+            int level = item.getItemMeta().getEnchantLevel(Enchantment.RIPTIDE);
+            ItemMeta im = item.getItemMeta();
+            im.removeEnchant(Enchantment.RIPTIDE);
+            im.setCustomModelData(level); //TODO: replace with components in VelcityTridents refactor
+            item.setItemMeta(im);
+        }
+
+        player.give(item);
+    }
+
     private boolean checkIfPlayerHasItem(ItemStack itemToCheck, Inventory inv) {
-        if (itemToCheck == null || !itemToCheck.hasItemMeta()) {
-            return false;
-        }
-        ItemMeta metaToCheck = itemToCheck.getItemMeta();
-        for (ItemStack invItem : inv.getContents()) {
-            if (invItem == null || !invItem.hasItemMeta()) {
-                continue;
-            }
-            ItemMeta invMeta = invItem.getItemMeta();
-            if (invMeta.getPersistentDataContainer().has(pluginItemKey, PersistentDataType.BYTE)) {
-                if (metaToCheck.equals(invMeta)) {
-                    return true; // The player has the same item.
-                }
-            }
-        }
-        return false;
+//        if (itemToCheck == null || !itemToCheck.hasItemMeta()) {
+//            return false;
+//        }
+//        ItemMeta metaToCheck = itemToCheck.getItemMeta();
+//        for (ItemStack invItem : inv.getContents()) {
+//            if (invItem == null || !invItem.hasItemMeta()) {
+//                continue;
+//            }
+//            ItemMeta invMeta = invItem.getItemMeta();
+//            if (invMeta.getPersistentDataContainer().has(pluginItemKey, PersistentDataType.BYTE)) {
+//                if (metaToCheck.equals(invMeta)) {
+//                    return true; // The player has the same item.
+//                }
+//            }
+//        }
+        return inv.contains(itemToCheck.getType());
     }
 }
