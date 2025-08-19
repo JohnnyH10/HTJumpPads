@@ -32,7 +32,7 @@ public class IceBoatPad implements PadAction {
             boat.setCustomName(ChatColor.AQUA + player.getName() + "'s Ice Boat");
             boat.setCustomNameVisible(true);
             boat.addPassenger(player);
-            PadSound.playSoundAtPlayer(player, "entity.item.pickup");
+            PadSound.playSoundAtPlayer(player, "entity.item.pickup",1.0f,1.0f);
             if (SendPlayersMessages.uuidSetMessages.contains(player.getUniqueId())) {
                 player.sendMessage(ChatColor.AQUA + "Spawned an ice boat!");
             }

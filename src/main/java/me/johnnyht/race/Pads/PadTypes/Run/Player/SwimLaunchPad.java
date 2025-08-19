@@ -33,7 +33,7 @@ public class SwimLaunchPad implements PadAction {
 
         Location playerEyeLocation = player.getEyeLocation();
         player.setVelocity(playerEyeLocation.getDirection().setY(0).normalize().multiply(x).setY(y));
-        PadSound.playSoundAtPlayer(player, "minecraft:entity.dolphin.ambient");
+        PadSound.playSoundAtPlayer(player, "minecraft:entity.player.splash.high_speed", 0.3f,1.5f);
         if (SendPlayersMessages.uuidSetMessages.contains(player.getUniqueId())) {
             player.sendMessage("§aSwim Launch! + " + x + " " + y); // Changed message for clarity
         }

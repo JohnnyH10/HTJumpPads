@@ -56,7 +56,7 @@ public class EquipPad implements PadAction {
             case "hand" -> player.getInventory().addItem(item);
             default -> player.sendMessage(ChatColor.RED + "Invalid equip slot: " + slot);
         }
-        PadSound.playSoundAtPlayer(player, "entity.item.pickup");
+        PadSound.playSoundAtPlayer(player, "entity.item.pickup",1.0f,1.0f);
     }
 
     private boolean checkIfPlayerHasItem(ItemStack itemToCheck, Inventory inv) {

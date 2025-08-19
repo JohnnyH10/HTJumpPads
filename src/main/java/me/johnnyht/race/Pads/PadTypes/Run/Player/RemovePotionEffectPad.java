@@ -30,7 +30,7 @@ public class RemovePotionEffectPad implements PadAction {
         for (PotionEffect effect : activeEffects) {
             player.removePotionEffect(effect.getType());
         }
-        PadSound.playSoundAtPlayer(player, "minecraft:entity.player.breath");
+        PadSound.playSoundAtPlayer(player, "minecraft:item.honey_bottle.drink",1.0f,1.0f);
 
         if (SendPlayersMessages.uuidSetMessages.contains(player.getUniqueId())) {
             player.sendMessage(ChatColor.GREEN + "All active potion effects removed.");

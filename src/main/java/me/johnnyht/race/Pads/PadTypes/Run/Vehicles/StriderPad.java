@@ -37,7 +37,7 @@ public class StriderPad implements PadAction {
         strider.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(speed);
         strider.setSaddle(true);
         strider.addPassenger(player);
-        PadSound.playSoundAtPlayer(player, "minecraft:entity.strider.ambient");
+        PadSound.playSoundAtPlayer(player, "minecraft:entity.strider.ambient",1.0f,1.0f);
 
         player.getInventory().addItem(new ItemStack(Material.WARPED_FUNGUS_ON_A_STICK));
         if (SendPlayersMessages.uuidSetMessages.contains(player.getUniqueId())) {

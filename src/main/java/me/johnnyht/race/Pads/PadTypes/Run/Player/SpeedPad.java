@@ -34,7 +34,7 @@ public class SpeedPad implements PadAction {
         }
 
         player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, time, amplifier));
-        PadSound.playSoundAtPlayer(player, "minecraft:entity.cat.purreow");
+        PadSound.playSoundAtPlayer(player, "minecraft:ui.toast.in", 1.5f,1.5f);
 
         if (SendPlayersMessages.uuidSetMessages.contains(player.getUniqueId())) {
             player.sendMessage("§eSpeed...");

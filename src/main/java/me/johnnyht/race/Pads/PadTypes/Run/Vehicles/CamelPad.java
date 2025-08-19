@@ -51,7 +51,7 @@ public class CamelPad implements PadAction {
         camel.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(speed);
         camel.getAttribute(Attribute.JUMP_STRENGTH).setBaseValue(jump);
         camel.addPassenger(player);
-        PadSound.playSoundAtPlayer(player, "minecraft:entity.camel.ambient");
+        PadSound.playSoundAtPlayer(player, "minecraft:entity.camel.ambient",1.0f,1.0f);
 
         if (SendPlayersMessages.uuidSetMessages.contains(player.getUniqueId())) {
             player.sendMessage(ChatColor.YELLOW + "Spawned a camel!");

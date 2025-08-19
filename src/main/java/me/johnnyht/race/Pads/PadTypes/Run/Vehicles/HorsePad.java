@@ -50,7 +50,7 @@ public class HorsePad implements PadAction {
 
         horse.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(speed);
         horse.getAttribute(Attribute.JUMP_STRENGTH).setBaseValue(jump);
-        PadSound.playSoundAtPlayer(player, "minecraft:entity.horse.ambient");
+        PadSound.playSoundAtPlayer(player, "minecraft:entity.horse.ambient",1.0f,1.0f);
 
 
         horse.addPassenger(player);

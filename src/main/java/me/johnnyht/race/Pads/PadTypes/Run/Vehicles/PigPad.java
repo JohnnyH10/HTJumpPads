@@ -40,7 +40,7 @@ public class PigPad implements PadAction {
         pig.addPassenger(player);
 
         player.getInventory().addItem(new ItemStack(Material.CARROT_ON_A_STICK));
-        PadSound.playSoundAtPlayer(player, "minecraft:entity.pig.ambient");
+        PadSound.playSoundAtPlayer(player, "minecraft:entity.pig.ambient",1.0f,1.0f);
 
         if (SendPlayersMessages.uuidSetMessages.contains(player.getUniqueId())) {
             player.sendMessage(ChatColor.YELLOW + "Spawned a pig and gave you a carrot on a stick!");

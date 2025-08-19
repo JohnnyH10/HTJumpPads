@@ -15,7 +15,7 @@ public class PadSound {
     private static final SoundCategory soundCategory = SoundCategory.AMBIENT;
     //ToDo we need to put the sounds and the sound soundCategory into the config
 
-    public static void playSoundAtPlayer(Player player, String sound) {
+    public static void playSoundAtPlayer(Player player, String sound, float volume, float pitch) {
         UUID playerUUID = player.getUniqueId();
         long currentTick = HtRacePads.getInstance().getServer().getCurrentTick();
 
@@ -28,7 +28,7 @@ public class PadSound {
             }
         }
 
-        player.playSound(player.getLocation(), sound, soundCategory, 1.0f, 1.0f);
+        player.playSound(player.getLocation(), sound, soundCategory, volume, pitch);
         soundCooldowns.put(sound, currentTick);
     }
 }

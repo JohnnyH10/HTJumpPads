@@ -36,7 +36,7 @@ public class ClearInventoryPad implements PadAction {
         if (slotArg == null) {
 
             clearAllInventory(inv);
-            PadSound.playSoundAtPlayer(player, "minecraft:entity.player.burp");
+            PadSound.playSoundAtPlayer(player, "minecraft:item.bundle.remove_one",1.0f,1.0f);
             return;
         }
 
@@ -48,7 +48,7 @@ public class ClearInventoryPad implements PadAction {
             case "hand" -> clearAllInventory(inv);
             default -> player.sendMessage(ChatColor.RED + "Invalid equip slot: " + slotArg);
         }
-        PadSound.playSoundAtPlayer(player, "minecraft:entity.player.burp");
+        PadSound.playSoundAtPlayer(player, "minecraft:item.bundle.remove_one",1.0f,1.0f);
     }
 
     private void clearSlot(Inventory inv, int slotIndex) {

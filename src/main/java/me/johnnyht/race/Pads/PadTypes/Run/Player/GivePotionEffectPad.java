@@ -57,7 +57,7 @@ public class GivePotionEffectPad implements PadAction {
         }
 
         player.addPotionEffect(new PotionEffect(effectType, duration, amplifier));
-        PadSound.playSoundAtPlayer(player, "minecraft:entity.player.splash.high_speed");
+        PadSound.playSoundAtPlayer(player, "minecraft:block.beacon.activate",0.5f,1.6f);
 
         if (SendPlayersMessages.uuidSetMessages.contains(player.getUniqueId())) {
             player.sendMessage(ChatColor.GREEN + "Applied potion effect: " + effectType.getName() +

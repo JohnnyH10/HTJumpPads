@@ -19,7 +19,7 @@ public class KillVehiclePad implements PadAction {
         Entity vehicle = player.getVehicle();
         if (vehicle != null) {
             vehicle.remove();
-            PadSound.playSoundAtPlayer(player, "minecraft:entity.player.death");
+            PadSound.playSoundAtPlayer(player, "minecraft:entity.player.death",1.0f,1.0f);
             if (SendPlayersMessages.uuidSetMessages.contains(player.getUniqueId())) {
                 player.sendMessage(ChatColor.RED + "Your vehicle has been removed!");
             }
