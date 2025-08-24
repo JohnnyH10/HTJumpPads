@@ -24,7 +24,7 @@ public class JumpPad implements PadAction {
             return;
         }
         player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 10, y));
-        PadSound.playSoundAtPlayer(player, "entity.experience_orb.pickup",0.5f,1.0f);
+        //PadSound.playSoundAtPlayer(player, "entity.experience_orb.pickup",0.5f,1.0f);
 
 
         if (player.hasPotionEffect(PotionEffectType.JUMP_BOOST) && isJump) {
@@ -33,6 +33,6 @@ public class JumpPad implements PadAction {
             PadSound.playSoundAtPlayer(player, "minecraft:entity.breeze.charge", 1.0f,1.2f);
         }
 
-        HtRacePads.getInstance().playerCoolDownPad(player.getUniqueId(), 5, HtRacePads.getInstance());
+        //HtRacePads.getInstance().playerCoolDownPad(player.getUniqueId(), 5, HtRacePads.getInstance());
     }
 }

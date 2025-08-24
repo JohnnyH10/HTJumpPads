@@ -1,5 +1,6 @@
 package me.johnnyht.race;
 
+import com.destroystokyo.paper.event.player.PlayerJumpEvent;
 import me.johnnyht.race.CommandManager.commands.PadGiveCommand;
 import me.johnnyht.race.CommandManager.RegisterCommands;
 import me.johnnyht.race.Pads.PadAction;
@@ -83,14 +84,35 @@ public final class HtRacePads extends JavaPlugin implements Listener {
 
 
     @EventHandler
-    public void onPlayerJump(PlayerMoveEvent event) {
+    public void onPlayerMove(PlayerMoveEvent event) {
         Player player = event.getPlayer();
         if (playersNoMoreJump.contains(player.getUniqueId())) return;
 
-        boolean isJumping = event.getFrom().getY() < event.getTo().getY() && player.getLocation().subtract(0, 0.1, 0).getBlock().getType().isSolid();
+        boolean isJumping = false;
         
         Block originBlock = event.getFrom().getBlock();
-        for (Entity entity : originBlock.getWorld().getNearbyEntities(originBlock.getLocation(), 1.5, 1.0, 1.5)) {
+        for (Entity entity : originBlock.getWorld().getNearbyEntities(originBlock.getLocation(), 1.9, 1.0, 1.9)) {
+            if (entity instanceof ItemFrame itemFrame) {
+                ItemStack item = itemFrame.getItem();
+                if (item.getType() != Material.AIR) {
+                    ItemMeta meta = item.getItemMeta();
+                    String name = meta.getDisplayName();
+                    executePadAction(name, itemFrame.getLocation(), player, isJumping, item);
+                }
+                return;
+            }
+        }
+    }
+
+    @EventHandler
+    public void onPlayerJump(PlayerJumpEvent event) {
+        Player player = event.getPlayer();
+        if (playersNoMoreJump.contains(player.getUniqueId())) return;
+
+        boolean isJumping = true;
+
+        Block originBlock = event.getFrom().getBlock();
+        for (Entity entity : originBlock.getWorld().getNearbyEntities(originBlock.getLocation(), 1.9, 1.0, 1.9)) {
             if (entity instanceof ItemFrame itemFrame) {
                 ItemStack item = itemFrame.getItem();
                 if (item.getType() != Material.AIR) {

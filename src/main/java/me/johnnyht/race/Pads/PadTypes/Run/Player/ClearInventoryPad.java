@@ -57,6 +57,7 @@ public class ClearInventoryPad implements PadAction {
             inv.setItem(slotIndex, null);
         }
     }
+    
 
     private void clearAllInventory(Inventory inv) {
         for (int i = 0; i < inv.getSize(); i++) {
