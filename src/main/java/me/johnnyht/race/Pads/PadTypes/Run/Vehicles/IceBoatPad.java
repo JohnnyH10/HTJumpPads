@@ -19,7 +19,9 @@ public class IceBoatPad implements PadAction {
         HtRacePads.playerCoolDownPad(player.getUniqueId(), 5, HtRacePads.plugin);
 
         if (player.getVehicle() instanceof Boat) {
-            player.sendMessage(ChatColor.RED + "You are already in a boat!");
+            if (SendPlayersMessages.uuidSetMessages.contains(player.getUniqueId())) {
+                player.sendMessage(ChatColor.RED + "You are already in a boat!");
+            }
             return;
         }
 
