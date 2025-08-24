@@ -90,8 +90,8 @@ public final class HtRacePads extends JavaPlugin implements Listener {
 
         boolean isJumping = false;
         
-        Block originBlock = event.getFrom().getBlock();
-        for (Entity entity : originBlock.getWorld().getNearbyEntities(originBlock.getLocation(), 1.9, 1.0, 1.9)) {
+        Location location = event.getPlayer().getLocation();
+        for (Entity entity : location.getWorld().getNearbyEntities(location, 1.9, 1.0, 1.9)) {
             if (entity instanceof ItemFrame itemFrame) {
                 ItemStack item = itemFrame.getItem();
                 if (item.getType() != Material.AIR) {
@@ -111,8 +111,8 @@ public final class HtRacePads extends JavaPlugin implements Listener {
 
         boolean isJumping = true;
 
-        Block originBlock = event.getFrom().getBlock();
-        for (Entity entity : originBlock.getWorld().getNearbyEntities(originBlock.getLocation(), 1.9, 1.0, 1.9)) {
+        Location location = event.getPlayer().getLocation();
+        for (Entity entity : location.getWorld().getNearbyEntities(location, 1.9, 1.0, 1.9)) {
             if (entity instanceof ItemFrame itemFrame) {
                 ItemStack item = itemFrame.getItem();
                 if (item.getType() != Material.AIR) {
