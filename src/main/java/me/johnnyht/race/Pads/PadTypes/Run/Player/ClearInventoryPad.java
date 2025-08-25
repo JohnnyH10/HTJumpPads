@@ -63,6 +63,7 @@ public class ClearInventoryPad implements PadAction {
         for (int i = 0; i < p.getInventory().getSize(); i++) {
             if (checkItem(p.getInventory().getItem(i))) {
                 p.getInventory().setItem(i, null);
+
             }
         }
         if (checkItem(p.getInventory().getItemInOffHand())) { p.getInventory().setItemInOffHand(null); }

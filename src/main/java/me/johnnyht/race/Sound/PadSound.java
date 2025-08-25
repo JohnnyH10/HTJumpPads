@@ -11,7 +11,7 @@ import java.util.UUID;
 
 public class PadSound {
     private static final Map<UUID, Map<String, Long>> playerSoundCooldowns = new HashMap<>();
-    private static final long COOLDOWN_TICKS = 10L;
+    private static final long COOLDOWN_TICKS = 20L;
     private static final SoundCategory soundCategory = SoundCategory.AMBIENT;
     //ToDo we need to put the sounds and the sound soundCategory into the config
 
