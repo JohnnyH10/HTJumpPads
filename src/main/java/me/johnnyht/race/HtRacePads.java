@@ -11,8 +11,6 @@ import me.johnnyht.race.Pads.PadTypes.Run.Vehicles.*;
 import me.johnnyht.race.bstats.Metrics;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
@@ -31,7 +29,6 @@ import java.util.logging.Logger;
 public final class HtRacePads extends JavaPlugin implements Listener {
 
     //public static final NamespacedKey PAD_ITEM = new NamespacedKey(HtRacePads.getInstance(),"pad_item");
-
     public static HtRacePads plugin;
     private static Logger log;
 
@@ -63,7 +60,6 @@ public final class HtRacePads extends JavaPlugin implements Listener {
     }
 
     private void registerPads() {
-
         padActions.put("jump", new JumpPad());
         padActions.put("launch", new LaunchPad());
         padActions.put("speed", new SpeedPad());
@@ -78,7 +74,6 @@ public final class HtRacePads extends JavaPlugin implements Listener {
         padActions.put("potionremove", new RemovePotionEffectPad());
         padActions.put("clearinv", new ClearInventoryPad());
         padActions.put("swimlaunch", new SwimLaunchPad());
-
         //ToDo add Tp Pad
     }
 
@@ -170,6 +165,4 @@ public final class HtRacePads extends JavaPlugin implements Listener {
             }
         }.runTaskLater(plugin, timeTicks);
     }
-
-
 }
