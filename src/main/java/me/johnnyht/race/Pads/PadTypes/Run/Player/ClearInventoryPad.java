@@ -71,6 +71,7 @@ public class ClearInventoryPad implements PadAction {
         if (checkItem(p.getInventory().getChestplate())) { p.getInventory().setChestplate(null); }
         if (checkItem(p.getInventory().getLeggings())) { p.getInventory().setLeggings(null); }
         if (checkItem(p.getInventory().getBoots())) { p.getInventory().setBoots(null); }
+        if (checkItem(p.getItemOnCursor())) { p.setItemOnCursor(null); }
     }
 
 

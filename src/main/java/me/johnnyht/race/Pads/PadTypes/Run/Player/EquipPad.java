@@ -81,6 +81,7 @@ public class EquipPad implements PadAction {
                 player.getInventory().getHelmet().getType() == itemToCheck.getType() ||
                 player.getInventory().getChestplate().getType() == itemToCheck.getType() ||
                 player.getInventory().getLeggings().getType() == itemToCheck.getType() ||
-                player.getInventory().getBoots().getType() == itemToCheck.getType();
+                player.getInventory().getBoots().getType() == itemToCheck.getType() ||
+                player.getItemOnCursor().getType() == itemToCheck.getType();
     }
 }
