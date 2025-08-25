@@ -35,7 +35,7 @@ public class ClearInventoryPad implements PadAction {
 
         if (slotArg == null) {
 
-            clearAllInventory(inv);
+            clearAllInventory(player);
             PadSound.playSoundAtPlayer(player, "minecraft:item.bundle.remove_one",1.0f,1.0f);
             return;
         }
@@ -45,7 +45,7 @@ public class ClearInventoryPad implements PadAction {
             case "chest" -> clearSlot(inv, 38);
             case "legs" -> clearSlot(inv, 37);
             case "boots" -> clearSlot(inv, 36);
-            case "hand" -> clearAllInventory(inv);
+            case "hand" -> clearAllInventory(player);
             default -> player.sendMessage(ChatColor.RED + "Invalid equip slot: " + slotArg);
         }
         PadSound.playSoundAtPlayer(player, "minecraft:item.bundle.remove_one",1.0f,1.0f);
@@ -59,13 +59,22 @@ public class ClearInventoryPad implements PadAction {
     }
     
 
-    private void clearAllInventory(Inventory inv) {
-        for (int i = 0; i < inv.getSize(); i++) {
-            ItemStack item = inv.getItem(i);
-            if (isPluginItem(item)) {
-                inv.clear(i);
+    private void clearAllInventory(Player p) {
+        for (int i = 0; i < p.getInventory().getSize(); i++) {
+            if (checkItem(p.getInventory().getItem(i))) {
+                p.getInventory().setItem(i, null);
             }
         }
+        if (checkItem(p.getInventory().getItemInOffHand())) { p.getInventory().setItemInOffHand(null); }
+        if (checkItem(p.getInventory().getHelmet())) { p.getInventory().setHelmet(null); }
+        if (checkItem(p.getInventory().getChestplate())) { p.getInventory().setChestplate(null); }
+        if (checkItem(p.getInventory().getLeggings())) { p.getInventory().setLeggings(null); }
+        if (checkItem(p.getInventory().getBoots())) { p.getInventory().setBoots(null); }
+    }
+
+
+    private boolean checkItem(ItemStack item) {
+        return item != null && item.hasItemMeta() && item.getItemMeta().getPersistentDataContainer().has(pluginItemKey);
     }
 
     private boolean isPluginItem(ItemStack item) {

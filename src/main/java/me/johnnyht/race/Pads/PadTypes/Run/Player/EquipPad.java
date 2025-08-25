@@ -37,7 +37,7 @@ public class EquipPad implements PadAction {
             item.setItemMeta(meta);
         }
 
-        if (checkIfPlayerHasItem(item, player.getInventory())) {
+        if (checkIfPlayerHasItem(item, player)) {
             if (SendPlayersMessages.uuidSetMessages.contains(player.getUniqueId())) {
                 player.sendMessage(ChatColor.YELLOW + "You already have this item!");
             }
@@ -74,22 +74,13 @@ public class EquipPad implements PadAction {
         player.give(item);
     }
 
-    private boolean checkIfPlayerHasItem(ItemStack itemToCheck, Inventory inv) {
-//        if (itemToCheck == null || !itemToCheck.hasItemMeta()) {
-//            return false;
-//        }
-//        ItemMeta metaToCheck = itemToCheck.getItemMeta();
-//        for (ItemStack invItem : inv.getContents()) {
-//            if (invItem == null || !invItem.hasItemMeta()) {
-//                continue;
-//            }
-//            ItemMeta invMeta = invItem.getItemMeta();
-//            if (invMeta.getPersistentDataContainer().has(pluginItemKey, PersistentDataType.BYTE)) {
-//                if (metaToCheck.equals(invMeta)) {
-//                    return true; // The player has the same item.
-//                }
-//            }
-//        }
-        return inv.contains(itemToCheck.getType());
+    private boolean checkIfPlayerHasItem(ItemStack itemToCheck, Player player) {
+        Inventory inv = player.getInventory();
+        return inv.contains(itemToCheck.getType()) ||
+                player.getInventory().getItemInOffHand().getType() == itemToCheck.getType() ||
+                player.getInventory().getHelmet().getType() == itemToCheck.getType() ||
+                player.getInventory().getChestplate().getType() == itemToCheck.getType() ||
+                player.getInventory().getLeggings().getType() == itemToCheck.getType() ||
+                player.getInventory().getBoots().getType() == itemToCheck.getType();
     }
 }
