@@ -10,7 +10,9 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.CraftingInventory;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
@@ -24,6 +26,8 @@ public class EquipPad implements PadAction {
         if (item == null || item.getType() == Material.AIR) return;
 
         // A check for the arguments to prevent ArrayIndexOutOfBoundsException
+
+
         if (args.length < 2) {
             player.sendMessage(ChatColor.RED + "Invalid command usage.");
             return;
@@ -37,6 +41,8 @@ public class EquipPad implements PadAction {
             item.setItemMeta(meta);
         }
 
+
+
         if (checkIfPlayerHasItem(item, player)) {
             if (SendPlayersMessages.uuidSetMessages.contains(player.getUniqueId())) {
                 player.sendMessage(ChatColor.YELLOW + "You already have this item!");
@@ -49,6 +55,13 @@ public class EquipPad implements PadAction {
         }
 
         String slot = args[1].toLowerCase();
+
+        //ToDO name it an option to have binding.
+        switch (slot) {
+            case "head", "boots", "legs", "chest" -> item.addEnchantment(Enchantment.BINDING_CURSE,1);
+        }
+        item.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+
         switch (slot) {
             case "head" -> player.getInventory().setHelmet(item);
             case "chest" -> player.getInventory().setChestplate(item);
@@ -76,6 +89,10 @@ public class EquipPad implements PadAction {
 
     private boolean checkIfPlayerHasItem(ItemStack itemToCheck, Player player) {
         Inventory inv = player.getInventory();
+        player.setItemOnCursor(null);
+        if (player.getOpenInventory().getTopInventory() instanceof CraftingInventory crafting) {
+            crafting.clear();
+        }
         return inv.contains(itemToCheck.getType()) ||
                 player.getInventory().getItemInOffHand().getType() == itemToCheck.getType() ||
                 player.getInventory().getHelmet().getType() == itemToCheck.getType() ||

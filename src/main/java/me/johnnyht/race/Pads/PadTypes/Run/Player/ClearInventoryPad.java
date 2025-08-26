@@ -9,6 +9,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.CraftingInventory;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -29,10 +30,14 @@ public class ClearInventoryPad implements PadAction {
         Inventory inv = player.getInventory();
         String slotArg = args.length > 1 ? args[1].toLowerCase() : null;
 
+
+
         if (SendPlayersMessages.uuidSetMessages.contains(player.getUniqueId())) {
             player.sendMessage(ChatColor.YELLOW + "Clearing plugin items" + (slotArg != null ? " in slot: " + slotArg : " (all slots)"));
         }
-
+        if (player.getOpenInventory().getTopInventory() instanceof CraftingInventory crafting) {
+            crafting.clear();
+        }
         if (slotArg == null) {
 
             clearAllInventory(player);
@@ -40,14 +45,6 @@ public class ClearInventoryPad implements PadAction {
             return;
         }
 
-        switch (slotArg) {
-            case "head" -> clearSlot(inv, 39);
-            case "chest" -> clearSlot(inv, 38);
-            case "legs" -> clearSlot(inv, 37);
-            case "boots" -> clearSlot(inv, 36);
-            case "hand" -> clearAllInventory(player);
-            default -> player.sendMessage(ChatColor.RED + "Invalid equip slot: " + slotArg);
-        }
         PadSound.playSoundAtPlayer(player, "minecraft:item.bundle.remove_one",1.0f,1.0f);
     }
 
@@ -60,6 +57,9 @@ public class ClearInventoryPad implements PadAction {
     
 
     private void clearAllInventory(Player p) {
+        if (p.getOpenInventory().getTopInventory() instanceof CraftingInventory crafting) {
+            crafting.clear();
+        }
         for (int i = 0; i < p.getInventory().getSize(); i++) {
             if (checkItem(p.getInventory().getItem(i))) {
                 p.getInventory().setItem(i, null);
