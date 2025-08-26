@@ -47,6 +47,7 @@ public class PadGiveCommand implements CommandExecutor {
         Inventory inv = box.getInventory();
 
         inv.addItem(createPad("Item Frame", Material.ITEM_FRAME));
+        inv.addItem(createPad("Anvil", Material.ANVIL));
         inv.addItem(createPad("jump 3", Material.SLIME_BALL));
         inv.addItem(createPad("launch 1.5 1", Material.FIREWORK_ROCKET));
         inv.addItem(createPad("speed 100 1", Material.SUGAR));
