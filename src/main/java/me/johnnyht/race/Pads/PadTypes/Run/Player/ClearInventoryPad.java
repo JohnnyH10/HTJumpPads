@@ -26,9 +26,6 @@ public class ClearInventoryPad implements PadAction {
     public void execute(String[] args, Location loc, Player player, boolean isJump, ItemStack item) {
         if (isJump) return;
         if (item == null || item.getType() == Material.AIR) return;
-
-        Inventory inv = player.getInventory();
-        inv.close();
         String slotArg = args.length > 1 ? args[1].toLowerCase() : null;
 
 
@@ -58,21 +55,25 @@ public class ClearInventoryPad implements PadAction {
     
 
     private void clearAllInventory(Player p) {
+        if (checkItem(p.getItemOnCursor())) { p.setItemOnCursor(null); }
+        Inventory inv = p.getInventory();
+        inv.close();
         if (p.getOpenInventory().getTopInventory() instanceof CraftingInventory crafting) {
             crafting.clear();
         }
+
+        if (checkItem(p.getInventory().getItemInOffHand())) { p.getInventory().setItemInOffHand(null); }
         for (int i = 0; i < p.getInventory().getSize(); i++) {
             if (checkItem(p.getInventory().getItem(i))) {
                 p.getInventory().setItem(i, null);
 
             }
         }
-        if (checkItem(p.getInventory().getItemInOffHand())) { p.getInventory().setItemInOffHand(null); }
         if (checkItem(p.getInventory().getHelmet())) { p.getInventory().setHelmet(null); }
         if (checkItem(p.getInventory().getChestplate())) { p.getInventory().setChestplate(null); }
         if (checkItem(p.getInventory().getLeggings())) { p.getInventory().setLeggings(null); }
         if (checkItem(p.getInventory().getBoots())) { p.getInventory().setBoots(null); }
-        if (checkItem(p.getItemOnCursor())) { p.setItemOnCursor(null); }
+
     }
 
 
