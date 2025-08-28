@@ -26,7 +26,8 @@ public class EquipPad implements PadAction {
         if (item == null || item.getType() == Material.AIR) return;
 
         // A check for the arguments to prevent ArrayIndexOutOfBoundsException
-
+        Inventory inv = player.getInventory();
+        inv.close();
 
         if (args.length < 2) {
             player.sendMessage(ChatColor.RED + "Invalid command usage.");

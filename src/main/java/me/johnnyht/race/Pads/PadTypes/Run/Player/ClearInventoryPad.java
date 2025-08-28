@@ -28,6 +28,7 @@ public class ClearInventoryPad implements PadAction {
         if (item == null || item.getType() == Material.AIR) return;
 
         Inventory inv = player.getInventory();
+        inv.close();
         String slotArg = args.length > 1 ? args[1].toLowerCase() : null;
 
 
