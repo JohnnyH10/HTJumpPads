@@ -3,6 +3,7 @@ package me.johnnyht.race;
 import com.destroystokyo.paper.event.player.PlayerJumpEvent;
 import me.johnnyht.race.CommandManager.commands.PadGiveCommand;
 import me.johnnyht.race.CommandManager.RegisterCommands;
+import me.johnnyht.race.IceBoatLogic.BoatIndicator;
 import me.johnnyht.race.Pads.PadAction;
 import me.johnnyht.race.Pads.PadTypes.Jump.Player.JumpPad;
 import me.johnnyht.race.Pads.PadTypes.Jump.Player.LaunchPad;
@@ -52,11 +53,17 @@ public final class HtRacePads extends JavaPlugin implements Listener {
         registerPads();
 
         getServer().getPluginManager().registerEvents(this, this);
+        getServer().getPluginManager().registerEvents(new BoatIndicator(), this);
 
         int pluginId = 25452;
         Metrics metrics = new Metrics(this, pluginId);
 
         //ToDo we need to add Nox implementation to the pads as a toggleable feature in the config
+    }
+
+    @Override
+    public void onDisable(){
+        BoatIndicator.removeArmorStand();
     }
 
     private void registerPads() {
