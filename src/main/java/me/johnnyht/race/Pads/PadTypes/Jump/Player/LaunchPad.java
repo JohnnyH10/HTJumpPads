@@ -36,7 +36,7 @@ public class LaunchPad implements PadAction {
         if (SendPlayersMessages.uuidSetMessages.contains(player.getUniqueId())) {
             player.sendMessage("§aHigh Jump! + " + x + " " + y);
         }
-        player.getWorld().spawnParticle(Particle.CLOUD, player.getLocation(), 30, 0.5, 0.5, 0.5, 0.05);
+        player.spawnParticle(Particle.CLOUD, player.getLocation(), 30, 0.5, 0.5, 0.5, 0.05);
         PadSound.playSoundAtPlayer(player, "minecraft:entity.ender_dragon.flap", 1.0f, 1.0f);
     }
 }

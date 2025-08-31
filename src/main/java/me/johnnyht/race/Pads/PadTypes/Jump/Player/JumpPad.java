@@ -28,7 +28,7 @@ public class JumpPad implements PadAction {
 
 
         if (player.hasPotionEffect(PotionEffectType.JUMP_BOOST) && isJump) {
-            player.getWorld().spawnParticle(Particle.CLOUD, player.getLocation(), 30, 0.5, 0.5, 0.5, 0.05);
+            player.spawnParticle(Particle.CLOUD, player.getLocation(), 30, 0.5, 0.5, 0.5, 0.05);
             player.removePotionEffect(PotionEffectType.JUMP_BOOST);
             PadSound.playSoundAtPlayer(player, "minecraft:entity.breeze.charge", 1.0f,1.2f);
         }
