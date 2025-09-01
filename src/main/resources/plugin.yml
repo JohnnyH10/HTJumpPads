@@ -7,9 +7,7 @@ commands:
     description: Gives the player a shulker box with one of each pad item
     usage: /givepads
     permission: racepads.givepads
-  addmessage:
-    description: Add yourself to message list
-    permission: racepads.messages
-  removemessage:
-    description: Remove yourself from message list
+  getpadmessages:
+    description: Add or Remove self to give yourself pad messages
+    usage: /getpadmessages (true||false)
     permission: racepads.messages

@@ -21,12 +21,23 @@ public class SendPlayersMessages implements CommandExecutor {
             return true;
         }
 
-        if (!sender.isOp()){
-            sender.sendMessage("You need to be oped.");
-            return true;
+        try {
+            boolean value = Boolean.parseBoolean(strings[0]);
+            if (value) {
+                uuidSetMessages.add(player.getUniqueId());
+                player.sendMessage("You have been added to get pad messages from pad use.");
+                return true;
+            } else {
+                UUID playerUUID = player.getUniqueId();
+                if (uuidSetMessages.remove(playerUUID)) {
+                    player.sendMessage("You have been removed from getting messages.");
+                } else {
+                    player.sendMessage("You were not on the message list.");
+                }
+            }
+        } catch (IllegalArgumentException e){
+            sender.sendMessage("Invalid argument. Please use 'true' or 'false'.");
         }
-
-        uuidSetMessages.add(((Player) sender).getUniqueId());
         return true;
     }
 }
