@@ -29,7 +29,9 @@ public class EquipPad implements PadAction {
 
 
         if (args.length < 2) {
-            player.sendMessage(ChatColor.RED + "Invalid command usage.");
+            if (SendPlayersMessages.uuidSetMessages.contains(player.getUniqueId())) {
+                player.sendMessage(ChatColor.RED + "Invalid pad usage look at the name");
+            }
             return;
         }
 
